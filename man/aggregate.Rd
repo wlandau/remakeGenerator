@@ -4,12 +4,12 @@
 \alias{aggregate}
 \title{Function \code{aggregate}}
 \usage{
-aggregate(x, name = "target", aggregator = "list")
+aggregate(x, target = "target", aggregator = "list")
 }
 \arguments{
 \item{x}{argument data frame}
 
-\item{name}{name of aggregated object}
+\item{target}{name of aggregated object}
 
 \item{aggregator}{function to aggregate the targets}
 }

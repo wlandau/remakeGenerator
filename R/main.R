@@ -44,10 +44,11 @@ commands = function(...) {
 #' @param values values to expand over
 expand = function(x, values = NULL){
   if(!length(values)) return(x)
-  i = 1:dim(x)[1]
-  x = x[rep(i, each = length(values)),]
-  values = values[rep(i, times = length(values))]
+  d1 = each = dim(x)[1]
+  x = x[rep(1:dim(x)[1], each = length(values)),]
+  values = rep(values, times = d1)
   x$target = paste(x$target, values, sep = "_")
+  row.names(x) = NULL
   x
 }
 
@@ -63,7 +64,14 @@ expand = function(x, values = NULL){
 #' expand over \code{values}. If \code{FALSE}, the elements of \code{values} will 
 #' simply replace the wildcard in the respective elements of \code{x$commands}.
 evaluate = function(x, wildcard = NULL, values = NULL, expand_x = TRUE){
-  if(expand_x) x = expand(x, values)
+  if(is.null(wildcard) | is.null(values)) return(x)
+  if(expand_x){
+    d1 = dim(x)[1]
+    x = expand(x, values)
+    values = rep(values, times = d1)
+  } else {
+    stopifnot(length(values) == dim(x)[1])
+  }
   x$command = Vectorize(function(value, command) gsub(wildcard, value, command))(values, x$command)
   x
 }
@@ -73,10 +81,10 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand_x = TRUE){
 #' @export 
 #' @return data frame to aggregate the targets
 #' @param x argument data frame
-#' @param name name of aggregated object
+#' @param target name of aggregated object
 #' @param aggregator function to aggregate the targets
-aggregate = function(x, name = "target", aggregator = "list"){
+aggregate = function(x, target = "target", aggregator = "list"){
   command = paste(x$command, collapse = ", ")
   command = paste0(aggregator, "(", command, ")")
-  data.frame(target = name, command = command)
+  data.frame(target = target, command = command, stringsAsFactors = F)
 }
