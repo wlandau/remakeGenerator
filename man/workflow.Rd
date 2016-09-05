@@ -4,17 +4,17 @@
 \alias{workflow}
 \title{Function \code{workflow}}
 \usage{
-workflow(sources = NULL, packages = NULL, targets = NULL,
+workflow(targets = NULL, sources = NULL, packages = NULL,
   remakefile = "remake.yml", makefile = "Makefile", begin = NULL,
   clean = NULL, remake_args = list())
 }
 \arguments{
+\item{targets}{YAML-like list of targets, which you can generate by supplying
+data frames of remake commands to the \code{targets()} function.}
+
 \item{sources}{Character vector of R source files}
 
 \item{packages}{Character vector of packages}
-
-\item{targets}{YAML-like list of targets, which you can generate by supplying
-data frames of remake commands to the \code{targets()} function.}
 
 \item{remakefile}{Character, name of the \code{remake} file to generate. Should be in the current working directory.}
 
