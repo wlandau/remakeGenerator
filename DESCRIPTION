@@ -7,6 +7,9 @@ Author: Will Landau
 Maintainer: Will Landau <will.landau@gmail.com>
 Description: Generates remake/YAML files and Makefiles with minimal R code.
 License: GPL (>=3)
+Imports:
+    plyr,
+    stringi
 Depends:
     R (>= 3.0.0)
 Suggests:
