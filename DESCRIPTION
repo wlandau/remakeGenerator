@@ -7,3 +7,4 @@ Author: Will Landau
 Maintainer: Will Landau <will.landau@gmail.com>
 Description: Generates remake/YAML files and Makefiles with minimal R code.
 License: GPL (>=3)
+RoxygenNote: 5.0.1
