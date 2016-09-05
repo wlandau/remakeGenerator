@@ -11,6 +11,31 @@ strings = function(...){
   out
 }
 
+#' @title Function \code{assert_commands}
+#' @description Check a data frame of remake commands 
+#' @export
+#' @param x data frame of remake commands
+assert_commands = function(x){
+  if(is.null(x$target) | any(!nchar(x$target)) | any(!nchar(x$command))) 
+    stop("All commands and their targets must be given. For example, write commands(x = data(y), z = 3) instead of commands(x, z) or commands(data(y), 3).")
+  if(anyDuplicated(x$target)) stop("Commands must be given unique targets. No duplicates allowed.")
+}
+
+#' @title Function \code{commands}
+#' @description Turn a collection of R expressions into 
+#' a data frame of remake targets and commands. 
+#' @export
+#' @return data frame of remake targets and commands
+#' @param ... commands named with their respective targets
+commands = function(...) {
+  args = structure(as.list(match.call()[-1]), class = "uneval")
+  if(!length(args)) return()
+  x = data.frame(target = names(args), command = as.character(args), stringsAsFactors = F)
+  rownames(x) = NULL
+  assert_commands(x)
+  x
+}
+
 #' @title Function \code{expand}
 #' @description Expands a dataframe of remake commands by duplicating rows.
 #' @export 
