@@ -1,0 +1,10 @@
+\documentclass{article}
+\begin{document}
+
+$\sqrt{2 \pi r}$
+
+<<>>=
+1 + 1
+@
+
+\end{document}

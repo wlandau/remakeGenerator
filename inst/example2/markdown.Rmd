@@ -1,0 +1,14 @@
+$E \Psi = H \Psi$, $y = \beta_1x_1 + \beta_2^2x_2 + \frac{\beta_3}{2}x_3 + \varepsilon$
+
+```{r}
+head(poisson32)
+```
+
+```{r}
+head(coef_table)
+```
+
+```{r}
+coef_file = read.csv("coef.csv")
+head(coef_file)
+```

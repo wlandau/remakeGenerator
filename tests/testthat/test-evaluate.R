@@ -7,8 +7,6 @@ test_that("Function evaluate is correct.", {
   expect_equal(evaluate(example_analyses()), example_analyses())
   expect_equal(evaluate(example_analyses(), wildcard = "..dataset.."), example_analyses())
   expect_equal(evaluate(example_analyses(), values = 1:3), example_analyses())
-  expect_error(evaluate(example_analyses(), wildcard = "..dataset..", 
-    values = c("data1", "data2", "data3"), expand = F))
   expect_equal(
     evaluate(example_analyses(), wildcard = "..dataset..", 
       values = c("data1", "data2"), expand = F), 

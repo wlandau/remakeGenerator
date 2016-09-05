@@ -15,5 +15,6 @@ Imports:
 Depends:
     R (>= 3.0.0)
 Suggests:
+    dplyr,
     testthat
 RoxygenNote: 5.0.1

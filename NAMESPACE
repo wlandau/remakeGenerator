@@ -3,6 +3,7 @@
 export(assert_commands)
 export(commands)
 export(evaluate)
+export(example_remakeGenerator)
 export(expand)
 export(gather)
 export(strings)
