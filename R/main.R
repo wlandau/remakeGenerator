@@ -60,20 +60,19 @@ expand = function(x, values = NULL){
 #' @param wildcard character string to replace with elements of \code{values}.
 #' @param values values to replace the wildcard in the remake commands. Must be
 #' the same length as \code{x$command} if \code{expand_x} is \code{TRUE}.
-#' @param expand_x \code{TRUE}/\code{FALSE} value. If \code{TRUE}, \code{x} will 
-#' expand over \code{values}. If \code{FALSE}, the elements of \code{values} will 
-#' simply replace the wildcard in the respective elements of \code{x$commands}.
+#' @param expand_x If \code{TRUE}, loop over \code{values} when evaluating the wildcard,
+#' creating more rows in the output data frame. Otherwise, each occurance of the wildcard
+#' is replaced with the next entry in the \code{values} vector, and the values are recycled.
 evaluate = function(x, wildcard = NULL, values = NULL, expand_x = TRUE){
   if(is.null(wildcard) | is.null(values)) return(x)
-  if(expand_x){
-    d1 = dim(x)[1]
-    x = expand(x, values)
-    values = rep(values, times = d1)
-  } else {
-    stopifnot(length(values) == dim(x)[1])
-  }
-  x$command = Vectorize(function(value, command) gsub(wildcard, value, command))(values, x$command)
-  x
+  matches = grepl(wildcard, x$command)
+  if(!length(matches)) return()
+  y = x[matches,]
+  if(expand_x) y = expand(y, values)
+  values = rep(values, length.out = dim(y)[1])
+  y$command = Vectorize(function(value, command) gsub(wildcard, value, command))(values, y$command)
+  rownames(x) = rownames(y) = NULL
+  rbind(y, x[!matches,])
 }
 
 #' @title Function \code{gather}
@@ -84,7 +83,7 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand_x = TRUE){
 #' @param target name of aggregated output object
 #' @param aggregator function used to gather the targets
 gather = function(x, target = "target", aggregator = "list"){
-  command = paste(x$command, collapse = ", ")
+  command = paste(x$target, collapse = ", ")
   command = paste0(aggregator, "(", command, ")")
   data.frame(target = target, command = command, stringsAsFactors = F)
 }
@@ -118,6 +117,8 @@ targets = function(...){
     x
   })
 
+  for(i in intersect(names(real_targets), names(fake_targets)))
+    fake_targets[[i]] = NULL
   out = c(fake_targets, real_targets)
   if(anyDuplicated(names(out))) stop("Targets must not have duplicate names.")
   out

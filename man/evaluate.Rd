@@ -14,9 +14,9 @@ evaluate(x, wildcard = NULL, values = NULL, expand_x = TRUE)
 \item{values}{values to replace the wildcard in the remake commands. Must be
 the same length as \code{x$command} if \code{expand_x} is \code{TRUE}.}
 
-\item{expand_x}{\code{TRUE}/\code{FALSE} value. If \code{TRUE}, \code{x} will 
-expand over \code{values}. If \code{FALSE}, the elements of \code{values} will 
-simply replace the wildcard in the respective elements of \code{x$commands}.}
+\item{expand_x}{If \code{TRUE}, loop over \code{values} when evaluating the wildcard,
+creating more rows in the output data frame. Otherwise, each occurance of the wildcard
+is replaced with the next entry in the \code{values} vector, and the values are recycled.}
 }
 \value{
 an evaluated data frame
