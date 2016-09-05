@@ -1,7 +1,7 @@
 Package: workflowGenerator
 Type: Package
 Title: Generates remake workflows
-Version: 1.0
+Version: 0.0
 Date: 2016-09-05
 Author: Will Landau
 Maintainer: Will Landau <will.landau@gmail.com>
