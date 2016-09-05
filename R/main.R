@@ -122,3 +122,28 @@ targets = function(...){
   if(anyDuplicated(names(out))) stop("Targets must not have duplicate names.")
   out
 }
+
+#' @title Function \code{workflow}
+#' @description Write the files for a remake workflow
+#' @export 
+#' @param sources Character vector of R source files
+#' @param packages Character vector of packages
+#' @param targets YAML-like list of targets, which you can generate by supplying
+#' data frames of remake commands to the \code{targets()} function.
+#' @param remakefile Character, name of the \code{remake} file to generate. Should be in the current working directory.
+#' @param makefile Character, name of the Makefile. Should be in the current
+#' working directory. Set to \code{NULL} to suppress the writing of the Makefile.
+#' @param begin Character vector of lines to prepend to the Makefile.
+#' @param clean Character vector of extra shell commands for \code{make clean}.
+#' @param remake_args Fully-named list of additional arguments to \code{remake::make}.
+#' You cannot set \code{target_names} or \code{remake_file} this way.
+workflow = function(sources = NULL, packages = NULL, targets = NULL, 
+  remakefile = "remake.yml", makefile = "Makefile", 
+  begin = NULL, clean = NULL, remake_args = list()){
+  yaml = list(sources = sources, packages = packages, targets = targets)
+  write(as.yaml(yaml), remakefile)
+  yaml_yesno_truefalse(remakefile)
+  if(!is.null(makefile)) 
+    write_makefile(makefile = makefile, remakefiles = remakefile, begin = begin, 
+      clean = clean, remake_args = remake_args)
+}
