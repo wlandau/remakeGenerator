@@ -62,7 +62,7 @@ Alternatively, distribute the work four parallel processes with
 system("make -j 4")
 ```
 
-# Walk through [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R)
+# A walk through [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R)
 
 [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) is the master plan of the analysis. It arranges the helper functions in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) to
 
@@ -149,39 +149,9 @@ workflow(targets, sources = "code.R", packages = "MASS",
 
 All that remains is to actually run or update the workflow with `remake::make()` or `system("make")` or `system("make -j 4")`, etc.
 
+# Running intermediate stages
 
-# The framework
-
-At each stage (`datasets`, `analyses`, `summaries`, `mse`, etc.), the user supplies named R commands. The commands are then arranged into a data frame. For example,
-
-```r
-> datasets
-     target                 command
-1  normal16  normal_dataset(n = 16)
-2 poisson32 poisson_dataset(n = 32)
-3 poisson64 poisson_dataset(n = 64)
-```
-
-The `target` is the name of the object to be generated, and `command` is a field in the [`remake.yml`](https://github.com/richfitz/remake) file. When additional fields are introduced in future versions of [`remake`](https://github.com/richfitz/remake) file, the user can simply add to them to the data frame. In [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R), the `plot` and `knitr` fields were already added manually in the `plots` and `reports` data frames, respectively. Recall from [`remake`](https://github.com/richfitz/remake) that setting `plot` to `TRUE` automatically sends output to a plot
-
-```r
-> plots
-   target                            command plot
-1 mse.pdf hist(mse_vector, col = I("black")) TRUE
-```
-
-and setting `knitr` to `TRUE` compiles `.md` and `.tex` target files from `.Rmd` and `.Rnw` files, respectively.
-
-```r
-> reports
-       target                         depends knitr
-1 markdown.md poisson32, coef_table, coef.csv  TRUE
-2   latex.tex   
-```
-
-# Running intermediate targets
-
-You can run each stage by itself (conditional, of course, on the dependencies). For example, to just run the summaries and nothing else afterwards, use 
+You can run each intermediate stage by itself (conditional, of course, on the dependencies). For example, to just run the summaries and nothing else afterwards, use 
 
 ```r
 remake::make("summaries")
@@ -203,6 +173,81 @@ or
 
 ```r
 system("make clean")
+```
+
+# The framework
+
+At each stage (`datasets`, `analyses`, `summaries`, `mse`, etc.), the user supplies named R commands. The commands are then arranged into a data frame. For example,
+
+```r
+> datasets
+     target                 command
+1  normal16  normal_dataset(n = 16)
+2 poisson32 poisson_dataset(n = 32)
+3 poisson64 poisson_dataset(n = 64)
+```
+
+The `target` is the name of the object to be generated, and `command` is a field in the [`remake.yml`](https://github.com/richfitz/remake) file. When additional fields are introduced in future versions of [`remake`](https://github.com/richfitz/remake) file, the user can simply add to them to the data frame. In [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R), the `plot` and `knitr` fields were already added manually to the `plots` and `reports` data frames, respectively. Recall from [`remake`](https://github.com/richfitz/remake) that setting `plot` to `TRUE` automatically sends output to a plot
+
+```r
+> plots
+   target                            command plot
+1 mse.pdf hist(mse_vector, col = I("black")) TRUE
+```
+
+and setting `knitr` to `TRUE` compiles `.md` and `.tex` target files from `.Rmd` and `.Rnw` files, respectively.
+
+```r
+> reports
+       target                         depends knitr
+1 markdown.md poisson32, coef_table, coef.csv  TRUE
+2   latex.tex   
+```
+
+In generating the `analyses` and `summaries` data frames, you may have noticed the `..dataset..` and `..analysis..` symbols. Those are wildcard placeholders indicating that the respective commands will iterate over each dataset and each analysis of each dataset, respectively. For the analyses, the data frame
+
+```r
+     target                         command
+1    linear    linear_analysis(..dataset..)
+2 quadratic quadratic_analysis(..dataset..)
+```
+
+becomes
+
+```r
+               target                       command
+1     linear_normal16     linear_analysis(normal16)
+2    linear_poisson32    linear_analysis(poisson32)
+3    linear_poisson64    linear_analysis(poisson64)
+4  quadratic_normal16  quadratic_analysis(normal16)
+5 quadratic_poisson32 quadratic_analysis(poisson32)
+6 quadratic_poisson64 quadratic_analysis(poisson64)
+```
+
+For the summaries, the data frame
+
+```r
+  target                                command
+1    mse mse_summary(..dataset.., ..analysis..)
+2   coef     coefficients_summary(..analysis..)
+```
+
+becomes
+
+```r
+                     target                                     command
+1       mse_linear_normal16      mse_summary(normal16, linear_normal16)
+2      mse_linear_poisson32    mse_summary(poisson32, linear_poisson32)
+3      mse_linear_poisson64    mse_summary(poisson64, linear_poisson64)
+4    mse_quadratic_normal16   mse_summary(normal16, quadratic_normal16)
+5   mse_quadratic_poisson32 mse_summary(poisson32, quadratic_poisson32)
+6   mse_quadratic_poisson64 mse_summary(poisson64, quadratic_poisson64)
+7      coef_linear_normal16       coefficients_summary(linear_normal16)
+8     coef_linear_poisson32      coefficients_summary(linear_poisson32)
+9     coef_linear_poisson64      coefficients_summary(linear_poisson64)
+10  coef_quadratic_normal16    coefficients_summary(quadratic_normal16)
+11 coef_quadratic_poisson32   coefficients_summary(quadratic_poisson32)
+12 coef_quadratic_poisson64   coefficients_summary(quadratic_poisson64)
 ```
 
 # Where's my output?
@@ -246,9 +291,44 @@ Intermediate objects such as datasets, analyses, and summaries are maintained in
 > 
 ```
 
-Just be sure to avoid `recall()` and `recallable()` in your serious workflows since changes using these funcitons are not tracked. 
+Be sure to avoid `recall()` and `recallable()` in serious workflows since changes using these functions are not reproducibly tracked. 
 
-# Example 2
+# High-performance computing
+
+If you want to run `make -j` to distribute tasks over multiple nodes of a [Slurm](http://slurm.schedmd.com/) cluster, refer to the Makefile in [this post](http://plindenbaum.blogspot.com/2014/09/parallelizing-gnu-make-4-in-slurm.html) and write
+
+```{r}
+workflow(..., 
+  begin = c(
+    "SHELL=srun",
+    ".SHELLFLAGS= <ARGS> bash -c"))
+```
+
+where `<ARGS>` stands for additional arguments to `srun`. Then, once the [Makefile](https://www.gnu.org/software/make/) is generated, you can run the workflow with
+`nohup make -j [N] &` in the command line, where `[N]` is the number of simultaneous tasks.
+For other task managers such as [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System), such an approach may not be possible. Regardless of the system, be sure that all nodes point to the same working directory so that they share the same `.remake` [storr](https://github.com/richfitz/storr) cache.
 
 
+# Use with the [downsize](https://github.com/wlandau/downsize) package
 
+You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code. That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full workload. In the example, just include `downsize` in `packages` inside [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) and replace the top few lines of [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) with the following.
+
+```{r}
+library(downsize)
+scale_down()
+
+normal_dataset = function(n = 16){
+  ds(data.frame(x = rnorm(n, 1), y = rnorm(n, 5)), nrow = 4)
+}
+
+poisson_dataset = function(n = 16){
+  ds(data.frame(x = rpois(n, 1), y = rpois(n, 5)), nrow = 4)
+}
+```
+
+The call `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `ds` function. The command `ds(A, ...)` says "Downsize A to a smaller object when `getOption("downsize")` is `TRUE`". For the full scaled-up workflow, just delete the first two lines or replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild things when options are changed, so you'll have to run `make clean` whenever you change the `downsize` option.
+
+
+# Workflows that don't fit the mold
+
+Some workflows don't fit the rigid structure of [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) but could still benefit from the automated [`remake.yml`](https://github.com/richfitz/remake) and [Makefile](https://www.gnu.org/software/make/) generation of `remakeGenerator`. That's why you can customize your own stages as arguments to `targets()`. Also, the `expand()` and `evaluate()` functions provide additional flexibility. `expand()` is a convenient way to replicate commands, and `evaluate()` lets you create and evaluate your own wildcard placeholders. See [Example 2](https://github.com/wlandau/remakeGenerator/tree/master/inst/example2), which almost the same as [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) except that it uses `expand()` and `evaluate()` explicitly. 
