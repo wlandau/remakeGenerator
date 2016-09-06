@@ -88,6 +88,11 @@ gather = function(x, target = "target", aggregator = "list"){
   data.frame(target = target, command = command, stringsAsFactors = F)
 }
 
+#' @title Function \code{factor2character}
+#' @description Turns a factor into a character and leaves other arguments alone.
+#' @export 
+#' @return a non-factor vector
+#' @param x a vector, factor or non-factor
 factor2character = function(x){
   if(is.factor(x)) x = as.character(x)
   x
@@ -105,7 +110,7 @@ targets = function(...){
   stage_names = names(stages)
   if(!length(stages)) return()
 
-  msg = "In function targets(), the supplied data frames must have names. For example, write targets(datasets = my_data_frame, analyses = another_data_frame) instead of targets(my_data_frame, another_data_frame)"
+  msg = "In function targets(), the supplied data frames must all have names. For example, write targets(datasets = my_data_frame, analyses = another_data_frame) instead of targets(my_data_frame, another_data_frame)."
   if(is.null(stage_names)) stop(msg)
   if(any(nchar(stage_names) < 1)) stop(msg)
 
