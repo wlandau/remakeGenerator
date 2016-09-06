@@ -83,7 +83,8 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand_x = TRUE){
 #' @param target name of aggregated output object
 #' @param aggregator function used to gather the targets
 gather = function(x, target = "target", aggregator = "list"){
-  command = paste(x$target, collapse = ", ")
+  command = paste(x$target, "=", x$target)
+  command = paste(command, collapse = ", ")
   command = paste0(aggregator, "(", command, ")")
   data.frame(target = target, command = command, stringsAsFactors = F)
 }

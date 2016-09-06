@@ -62,7 +62,7 @@ Alternatively, distribute the work four parallel processes with
 system("make -j 4")
 ```
 
-# Deeper look at [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R)
+# Walk through [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R)
 
 [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) is the master plan of the analysis. It arranges the helper functions in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) to
 
@@ -144,10 +144,111 @@ and generates the [`remake.yml`](https://github.com/richfitz/remake) file and [M
 
 ```r
 workflow(targets, sources = "code.R", packages = "MASS", 
-  begin = c("# beginning lines", "# more lines"))
+  begin = c("# prepend this", "# to the Makefile"))
 ```
 
+All that remains is to actually run or update the workflow with `remake::make()` or `system("make")` or `system("make -j 4")`, etc.
 
+
+# The framework
+
+At each stage (`datasets`, `analyses`, `summaries`, `mse`, etc.), the user supplies named R commands. The commands are then arranged into a data frame. For example,
+
+```r
+> datasets
+     target                 command
+1  normal16  normal_dataset(n = 16)
+2 poisson32 poisson_dataset(n = 32)
+3 poisson64 poisson_dataset(n = 64)
+```
+
+The `target` is the name of the object to be generated, and `command` is a field in the [`remake.yml`](https://github.com/richfitz/remake) file. When additional fields are introduced in future versions of [`remake`](https://github.com/richfitz/remake) file, the user can simply add to them to the data frame. In [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R), the `plot` and `knitr` fields were already added manually in the `plots` and `reports` data frames, respectively. Recall from [`remake`](https://github.com/richfitz/remake) that setting `plot` to `TRUE` automatically sends output to a plot
+
+```r
+> plots
+   target                            command plot
+1 mse.pdf hist(mse_vector, col = I("black")) TRUE
+```
+
+and setting `knitr` to `TRUE` compiles `.md` and `.tex` target files from `.Rmd` and `.Rnw` files, respectively.
+
+```r
+> reports
+       target                         depends knitr
+1 markdown.md poisson32, coef_table, coef.csv  TRUE
+2   latex.tex   
+```
+
+# Running intermediate targets
+
+You can run each stage by itself (conditional, of course, on the dependencies). For example, to just run the summaries and nothing else afterwards, use 
+
+```r
+remake::make("summaries")
+```
+
+or
+
+```r
+system("make summaries")
+```
+
+To clean up your work and remove all files generated from running the workflow
+
+```r
+remake::make("clean")
+```
+
+or
+
+```r
+system("make clean")
+```
+
+# Where's my output?
+
+Intermediate objects such as datasets, analyses, and summaries are maintained in [`remake`](https://github.com/richfitz/remake)'s hidden [`storr`](https://github.com/richfitz/storr) cache (`.remake/objects/`). At any point in the workflow, you check the available objects using `recallable()` and load an object using `recall()`. After running Example 1, you can load the `parallelRemake` package and explore. 
+
+```r
+> library(parallelRemake)
+> recallable()
+ [1] "coef"                     "coef_linear_normal16"    
+ [3] "coef_linear_poisson32"    "coef_linear_poisson64"   
+ [5] "coef_quadratic_normal16"  "coef_quadratic_poisson32"
+ [7] "coef_quadratic_poisson64" "coef_table"              
+ [9] "linear_normal16"          "linear_poisson32"        
+[11] "linear_poisson64"         "mse"                     
+[13] "mse_linear_normal16"      "mse_linear_poisson32"    
+[15] "mse_linear_poisson64"     "mse_quadratic_normal16"  
+[17] "mse_quadratic_poisson32"  "mse_quadratic_poisson64" 
+[19] "mse_vector"               "normal16"                
+[21] "poisson32"                "poisson64"               
+[23] "quadratic_normal16"       "quadratic_poisson32"     
+[25] "quadratic_poisson64"     
+> recall("normal16")
+            x        y
+1   1.5500328 4.226192
+2   1.4714371 4.374820
+3   0.4906371 6.228053
+4   1.0086720 4.945609
+5   1.3360642 5.619259
+6   1.4899272 4.920836
+7   0.7046544 4.926668
+8   1.4092923 4.030779
+9   2.5636956 6.026149
+10 -0.5202316 4.368160
+11  0.5540340 4.760691
+12  1.6256007 4.722436
+13  1.3210316 3.838017
+14  0.8247446 2.708511
+15  2.7262725 5.878415
+16  2.3565342 4.445811
+> 
+```
+
+Just be sure to avoid `recall()` and `recallable()` in your serious workflows since changes using these funcitons are not tracked. 
+
+# Example 2
 
 
 
