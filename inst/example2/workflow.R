@@ -43,9 +43,10 @@ reports = data.frame(target = strings(markdown.md, latex.tex),
   depends = c("poisson32_rep1, coef_table, coef.csv", ""))
 reports$knitr = TRUE
 
-begin = c("# This is my Makefile", "# Variables...")
-targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, mse = mse, coef = coef, output = output, plots = plots, reports = reports)
-workflow(targets, sources = "code.R", packages = "MASS", begin = begin)
+targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
+  mse = mse, coef = coef, output = output, plots = plots, reports = reports)
+workflow(targets, sources = "code.R", packages = "MASS", 
+  begin = c("# beginning lines", "# more lines"))
 
 ###############################################
 ### Now, run remake::make() or the Makefile ###
