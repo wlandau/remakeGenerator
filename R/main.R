@@ -88,6 +88,11 @@ gather = function(x, target = "target", aggregator = "list"){
   data.frame(target = target, command = command, stringsAsFactors = F)
 }
 
+factor2character = function(x){
+  if(is.factor(x)) x = as.character(x)
+  x
+}
+
 #' @title Function \code{targets}
 #' @description Put the data frames of remake commands all together to make a
 #' YAML-like list of targets
@@ -95,7 +100,8 @@ gather = function(x, target = "target", aggregator = "list"){
 #' @return YAML-like list of targets
 #' @param ... data frames of remake commands
 targets = function(...){
-  stages = list(...)
+  stages = lapply(list(...), function(x)
+    data.frame(lapply(x, factor2character), stringsAsFactors = FALSE))
   stage_names = names(stages)
   if(!length(stages)) return()
 
@@ -147,4 +153,44 @@ workflow = function(targets = NULL, sources = NULL, packages = NULL,
   if(!is.null(makefile)) 
     write_makefile(makefile = makefile, remakefiles = remakefile, begin = begin, 
       clean = clean, remake_args = remake_args)
+}
+
+#' @title Function \code{analyses}
+#' @description Helper function for the user. Preprocess a data frame of analysis commands.
+#' @export 
+#' @return preprocessed data frame of analysis commands
+#' @param commands output of \code{commands(...)}
+#' @param datasets Data frame of commands to generate datasets
+analyses = function(commands, datasets){
+  evaluate(commands, wildcard = "..dataset..", values = datasets$target)
+}
+
+#' @title Function \code{summaries}
+#' @description Helper function for the user. Preprocess a data frame of summary commands.
+#' @export 
+#' @return preprocessed data frame of analysis commands
+#' @param commands output of \code{commands(...)}
+#' @param analyses Data frame of commands to generate analyses
+#' @param datasets Data frame of commands to generate datasets
+summaries = function(commands, analyses, datasets){
+  commands = evaluate(commands, wildcard = "..analysis..", values = analyses$target)
+  evaluate(commands, wildcard = "..dataset..", values = datasets$target, expand_x = FALSE)
+}
+
+#' @title Function \code{example_remakeGenerator}
+#' @description Write files to generate an example workflow.
+#' Refer to the generated README.md for further instructions.
+#' @export
+#' @param index index of example (1, 2, etc.)
+example_remakeGenerator = function(index = 1){
+  stopifnot(index %in% 1:2)
+  example = paste0("example", index)
+  dir = system.file(example, package = "remakeGenerator")
+  for(file in list.files(dir)){
+    path = system.file(example, file, package = "remakeGenerator")
+    if (!file.exists(path)) stop("File ", file, 
+      " is missing from installed package remakeGenerator.", call.=FALSE)
+    contents = readLines(path)
+    write(contents, file)
+  }
 }

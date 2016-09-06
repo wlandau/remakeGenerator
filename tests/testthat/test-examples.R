@@ -7,8 +7,9 @@ test_that("Examples run as expected", {
     testwd(paste0("example", i))
     example_remakeGenerator(i)
     source("workflow.R")
-    tmp = system("make -j 8 2>&1", intern = TRUE)
-    tmp = system("make clean 2>&1", intern = TRUE)
+    expect_true(file.exists("Makefile"))
+    remake::make()
+    remake::make("clean")
     testrm()
   }
 })

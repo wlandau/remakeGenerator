@@ -1,4 +1,3 @@
-library(dplyr)
 library(remakeGenerator)
 
 datasets = commands(
@@ -7,18 +6,17 @@ datasets = commands(
   poisson64 = poisson_dataset(n = 64)
 )
 
-analyses = commands(
-  linear = linear_analysis(..dataset..),
-  quadratic = quadratic_analysis(..dataset..)
-) %>% 
-evaluate(wildcard = "..dataset..", values = datasets$target)
+analyses = analyses(
+  commands = commands(
+    linear = linear_analysis(..dataset..),
+    quadratic = quadratic_analysis(..dataset..)), 
+  datasets = datasets)
 
-summaries = commands(
-  mse = mse_summary(..dataset.., ..analysis..),
-  coef = coefficients_summary(..analysis..)
-) %>% 
-evaluate(wildcard = "..analysis..", values = analyses$target) %>% 
-evaluate(wildcard = "..dataset..", values = datasets$target, expand_x = FALSE)
+summaries = summaries(
+  commands = commands(
+    mse = mse_summary(..dataset.., ..analysis..),
+    coef = coefficients_summary(..analysis..)), 
+  analyses = analyses, datasets = datasets)
 
 mse = gather(summaries[1:6,], target = "mse")
 coef = gather(summaries[7:12,], target = "coef")
@@ -35,9 +33,13 @@ plots = commands(
 plots$plot = TRUE
 
 reports = data.frame(target = strings(markdown.md, latex.tex),
-  knitr = c(TRUE, TRUE),
-  depends = c("poisson32, coef_table, coef.csv", ""), stringsAsFactors = F)
+  depends = c("poisson32, coef_table, coef.csv", ""))
+reports$knitr = TRUE
 
 begin = c("# This is my Makefile", "# Variables...")
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, mse = mse, coef = coef, output = output, plots = plots, reports = reports)
 workflow(targets, sources = "code.R", packages = "MASS", begin = begin)
+
+###############################################
+### Now, run remake::make() or the Makefile ###
+###############################################
