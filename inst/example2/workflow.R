@@ -46,7 +46,7 @@ reports$knitr = TRUE
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
   mse = mse, coef = coef, output = output, plots = plots, reports = reports)
 workflow(targets, sources = "code.R", packages = "MASS", 
-  begin = c("# beginning lines", "# more lines"))
+  begin = c("# prepend this", "# to the Makefile"))
 
 ###############################################
 ### Now, run remake::make() or the Makefile ###

@@ -131,4 +131,23 @@ reports = data.frame(target = strings(markdown.md, latex.tex),
 reports$knitr = TRUE
 ```
 
+With these stages of the workflow planned, `workflow.R` gathers all the 
+[`remake`](https://github.com/richfitz/remake) targets in one [YAML](http://yaml.org/)-like list
+
+```r
+targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
+  mse = mse, coef = coef, output = output, plots = plots, reports = reports)
+```
+
+and generates the [`remake.yml`](https://github.com/richfitz/remake) file and [Makefile](https://www.gnu.org/software/make/) to run or update the workflow reporducibly.
+
+
+```r
+workflow(targets, sources = "code.R", packages = "MASS", 
+  begin = c("# beginning lines", "# more lines"))
+```
+
+
+
+
 
