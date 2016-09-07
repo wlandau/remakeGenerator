@@ -144,7 +144,7 @@ and generates the [`remake.yml`](https://github.com/richfitz/remake) file and [M
 
 ```r
 workflow(targets, sources = "code.R", packages = "MASS", 
-  begin = c("# prepend this", "# to the Makefile"))
+  begin = c("# Prepend this", "# to the Makefile."))
 ```
 
 All that remains is to actually run or update the workflow with `remake::make()` or `system("make")` or `system("make -j 4")`, etc.
