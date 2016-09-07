@@ -206,15 +206,16 @@ and setting `knitr` to `TRUE` compiles `.md` and `.tex` target files from `.Rmd`
 
 Above, and in the general case, each `depends` field is a character string of comma-separated [`remake`](https://github.com/richfitz/remake) dependencies. Dependencies that are arguments to functions in the [`remake`](https://github.com/richfitz/remake) `command` field are automatically resolved and should not be restated in `depends`. For reports, however, every dependency must be explicitly given.
 
-In generating the `analyses` and `summaries` data frames, you may have noticed the `..dataset..` and `..analysis..` symbols. Those are wildcard placeholders indicating that the respective commands will iterate over each dataset and each analysis of each dataset, respectively. For the analyses, the data frame
+In generating the `analyses` and `summaries` data frames, you may have noticed the `..dataset..` and `..analysis..` symbols. Those are wildcard placeholders indicating that the respective commands will iterate over each dataset and each analysis of each dataset, respectively. The `analyses()` function turns 
 
 ```r
+> commands(linear = linear_analysis(..dataset..), quadratic = quadratic_analysis(..dataset..))
      target                         command
 1    linear    linear_analysis(..dataset..)
 2 quadratic quadratic_analysis(..dataset..)
 ```
 
-becomes
+into
 
 ```r
                target                       command
@@ -226,15 +227,16 @@ becomes
 6 quadratic_poisson64 quadratic_analysis(poisson64)
 ```
 
-For the summaries, the data frame
+and the `summaries()` function turns
 
 ```r
+> commands(mse = mse_summary(..dataset.., ..analysis..), coef = coefficients_summary(..analysis..))
   target                                command
 1    mse mse_summary(..dataset.., ..analysis..)
 2   coef     coefficients_summary(..analysis..)
 ```
 
-becomes
+into
 
 ```r
                      target                                     command
