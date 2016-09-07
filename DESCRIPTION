@@ -16,5 +16,6 @@ Depends:
     R (>= 3.0.0)
 Suggests:
     dplyr,
+    remake,
     testthat
 RoxygenNote: 5.0.1

@@ -204,6 +204,8 @@ and setting `knitr` to `TRUE` compiles `.md` and `.tex` target files from `.Rmd`
 2   latex.tex   
 ```
 
+Above, and in the general case, each `depends` field is a character string of comma-separated [`remake`](https://github.com/richfitz/remake) dependencies. Dependencies that are arguments to functions in the [`remake`](https://github.com/richfitz/remake) `command` field are automatically resolved and should not be restated in `depends`. For reports, however, every dependency must be explicitly given.
+
 In generating the `analyses` and `summaries` data frames, you may have noticed the `..dataset..` and `..analysis..` symbols. Those are wildcard placeholders indicating that the respective commands will iterate over each dataset and each analysis of each dataset, respectively. For the analyses, the data frame
 
 ```r
