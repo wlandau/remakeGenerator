@@ -4,7 +4,7 @@
 \alias{evaluate}
 \title{Function \code{evaluate}}
 \usage{
-evaluate(x, wildcard = NULL, values = NULL, expand_x = TRUE)
+evaluate(x, wildcard = NULL, values = NULL, expand = TRUE)
 }
 \arguments{
 \item{x}{argument data frame}
@@ -12,9 +12,9 @@ evaluate(x, wildcard = NULL, values = NULL, expand_x = TRUE)
 \item{wildcard}{character string to replace with elements of \code{values}.}
 
 \item{values}{values to replace the wildcard in the remake commands. Must be
-the same length as \code{x$command} if \code{expand_x} is \code{TRUE}.}
+the same length as \code{x$command} if \code{expand} is \code{TRUE}.}
 
-\item{expand_x}{If \code{TRUE}, loop over \code{values} when evaluating the wildcard,
+\item{expand}{If \code{TRUE}, loop over \code{values} when evaluating the wildcard,
 creating more rows in the output data frame. Otherwise, each occurance of the wildcard
 is replaced with the next entry in the \code{values} vector, and the values are recycled.}
 }

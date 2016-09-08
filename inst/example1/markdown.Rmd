@@ -5,7 +5,7 @@ head(poisson32)
 ```
 
 ```{r}
-head(coef_table)
+head(coef)
 ```
 
 ```{r}

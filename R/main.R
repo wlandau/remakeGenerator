@@ -59,16 +59,16 @@ expand = function(x, values = NULL){
 #' @param x argument data frame
 #' @param wildcard character string to replace with elements of \code{values}.
 #' @param values values to replace the wildcard in the remake commands. Must be
-#' the same length as \code{x$command} if \code{expand_x} is \code{TRUE}.
-#' @param expand_x If \code{TRUE}, loop over \code{values} when evaluating the wildcard,
+#' the same length as \code{x$command} if \code{expand} is \code{TRUE}.
+#' @param expand If \code{TRUE}, loop over \code{values} when evaluating the wildcard,
 #' creating more rows in the output data frame. Otherwise, each occurance of the wildcard
 #' is replaced with the next entry in the \code{values} vector, and the values are recycled.
-evaluate = function(x, wildcard = NULL, values = NULL, expand_x = TRUE){
+evaluate = function(x, wildcard = NULL, values = NULL, expand = TRUE){
   if(is.null(wildcard) | is.null(values)) return(x)
   matches = grepl(wildcard, x$command)
   if(!length(matches)) return()
   y = x[matches,]
-  if(expand_x) y = expand(y, values)
+  if(expand) y = expand(y, values)
   values = rep(values, length.out = dim(y)[1])
   y$command = Vectorize(function(value, command) gsub(wildcard, value, command))(values, y$command)
   rownames(x) = rownames(y) = NULL
@@ -180,7 +180,7 @@ analyses = function(commands, datasets){
 #' @param datasets Data frame of commands to generate datasets
 summaries = function(commands, analyses, datasets){
   commands = evaluate(commands, wildcard = "..analysis..", values = analyses$target)
-  evaluate(commands, wildcard = "..dataset..", values = datasets$target, expand_x = FALSE)
+  evaluate(commands, wildcard = "..dataset..", values = datasets$target, expand = FALSE)
 }
 
 #' @title Function \code{example_remakeGenerator}

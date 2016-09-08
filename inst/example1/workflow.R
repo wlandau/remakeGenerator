@@ -19,19 +19,17 @@ summaries = summaries(
   analyses = analyses, datasets = datasets)
 
 mse = gather(summaries[1:6,], target = "mse")
-coef = gather(summaries[7:12,], target = "coef")
+coef = gather(summaries[7:12,], target = "coef", aggregator = "rbind")
 
 output = commands(
-  coef_table = do.call(I("rbind"), coef),
-  coef.csv = write.csv(coef_table, target_name),
-  mse_vector = unlist(mse)
-)
+  coef.csv = write.csv(coef, target_name),
+  mse_vector = unlist(mse))
 
 plots = commands(mse.pdf = hist(mse_vector, col = I("black")))
 plots$plot = TRUE
 
 reports = data.frame(target = strings(markdown.md, latex.tex),
-  depends = c("poisson32, coef_table, coef.csv", ""))
+  depends = c("poisson32, coef, coef.csv", ""))
 reports$knitr = TRUE
 
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 

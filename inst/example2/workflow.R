@@ -22,23 +22,21 @@ summaries = commands(
   coef = coefficients_summary(..analysis..)
 ) %>% 
 evaluate(wildcard = "..analysis..", values = analyses$target) %>% 
-evaluate(wildcard = "..dataset..", values = datasets$target, expand_x = FALSE)
+evaluate(wildcard = "..dataset..", values = datasets$target, expand = FALSE)
 
 # 24 datasets to summarize rather than 12.
 mse = gather(summaries[1:12,], target = "mse")
-coef = gather(summaries[13:24,], target = "coef")
+coef = gather(summaries[13:24,], target = "coef", aggregator = "rbind")
 
 output = commands(
-  coef_table = do.call(I("rbind"), coef),
-  coef.csv = write.csv(coef_table, target_name),
-  mse_vector = unlist(mse)
-)
+  coef.csv = write.csv(coef, target_name),
+  mse_vector = unlist(mse))
 
 plots = commands(mse.pdf = hist(mse_vector, col = I("black")))
 plots$plot = TRUE
 
 reports = data.frame(target = strings(markdown.md, latex.tex),
-  depends = c("poisson32_rep1, coef_table, coef.csv", ""))
+  depends = c("poisson32_rep1, coef, coef.csv", ""))
 reports$knitr = TRUE
 
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
