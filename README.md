@@ -127,8 +127,8 @@ system("make -j 4")
     reports$knitr = TRUE
     ```
     
-With these stages of the workflow planned, `workflow.R` gathers all the 
-[`remake`](https://github.com/richfitz/remake) targets in one [YAML](http://yaml.org/)-like list
+With these stages of the workflow planned, `workflow.R` collects all the 
+[`remake`](https://github.com/richfitz/remake) targets into one [YAML](http://yaml.org/)-like list
 
 ```r
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
