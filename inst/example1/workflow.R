@@ -27,9 +27,7 @@ output = commands(
   mse_vector = unlist(mse)
 )
 
-plots = commands(
-  mse.pdf = hist(mse_vector, col = I("black"))
-)
+plots = commands(mse.pdf = hist(mse_vector, col = I("black")))
 plots$plot = TRUE
 
 reports = data.frame(target = strings(markdown.md, latex.tex),

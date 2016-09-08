@@ -2,10 +2,10 @@
 
 The `remakeGenerator` package is a helper add-on for [`remake`](https://github.com/richfitz/remake), an awesome reproducible build system for R. If you haven't done so already, go learn [`remake`](https://github.com/richfitz/remake)! Once you do that, you will be ready to use `remakeGenerator`. With `remakeGenerator`, your long and cumbersome workflows will be
 
-- **Quick to set up**. Plan a large workflow with minimal code and a call to the `workflow()` function.
+- **Quick to set up**. You can plan a large workflow with a small amount of code.
 - **Reproducible**. Reproduce computation with `remake::make()` or [GNU Make](https://www.gnu.org/software/make/).
 - **Development-friendly**. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change your code, your next computation will only run the parts that are new or out of date.
-- **Parallelizable**. Easily distribute your workflow over multiple parallel processes with [GNU Make](https://www.gnu.org/software/make/).
+- **Parallelizable**. Distribute your workflow over multiple parallel processes with a single flag in [GNU Make](https://www.gnu.org/software/make/).
 
 
 # Installation
@@ -27,7 +27,7 @@ R CMD INSTALL ...
 
 where `...` is replaced by the name of the tarball produced by `R CMD build`.
 
-Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) to take full advantage of `remakeGenerator`'s features, particularly to run [Makefiles](https://www.gnu.org/software/make/) with `system("make")`.
+Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) to take full advantage of `remakeGenerator`'s features, specifically to run [Makefiles](https://www.gnu.org/software/make/) with `system("make")`.
 
 # Example 1 Quickstart
 
@@ -35,10 +35,10 @@ Write the files for [Example 1](https://github.com/wlandau/remakeGenerator/tree/
 
 ```r
 library(remakeGenerator)
-example_remakeGenerator(1)
+example_remakeGenerator(index = 1)
 ```
 
-Run [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) to produce `remake.yml` and the [Makefile](https://www.gnu.org/software/make/).
+Run [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) to produce the required  [`remake`](https://github.com/richfitz/remake) file `remake.yml`, along with the optional [Makefile](https://www.gnu.org/software/make/).
 
 ```r
 source("workflow.R")
@@ -50,13 +50,13 @@ Then, run the full example directly through [`remake`](https://github.com/richfi
 remake::make()
 ```
 
-or with the [Makefile](https://www.gnu.org/software/make/)
+or indirectly through the [Makefile](https://www.gnu.org/software/make/) (which calls `remake::make()` on `remake.yml` for individual targets).
 
 ```r
 system("make")
 ```
 
-Alternatively, distribute the work four parallel processes with
+Alternatively, distribute the work over four parallel processes with
 
 ```r
 system("make -j 4")
@@ -67,70 +67,55 @@ system("make -j 4")
 [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) is the master plan of the analysis. It arranges the helper functions in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) to
 
 1. Generate some datasets.
-
-```r
-library(remakeGenerator)
-datasets = commands(
-  normal16 = normal_dataset(n = 16),
-  poisson32 = poisson_dataset(n = 32),
-  poisson64 = poisson_dataset(n = 64)
-)
-```
-
+    ```r
+    library(remakeGenerator)
+    datasets = commands(
+      normal16 = normal_dataset(n = 16),
+      poisson32 = poisson_dataset(n = 32),
+      poisson64 = poisson_dataset(n = 64)
+    )
+    ```
 2. Analyze each dataset with each of two methods of analysis.
-
-```r
-analyses = analyses(
-  commands = commands(
-    linear = linear_analysis(..dataset..),
-    quadratic = quadratic_analysis(..dataset..)), 
-  datasets = datasets)
-```
-
+    ```r
+    analyses = analyses(
+      commands = commands(
+        linear = linear_analysis(..dataset..),
+        quadratic = quadratic_analysis(..dataset..)), 
+      datasets = datasets)
+    ```
 3. Summarize each analysis of each dataset
-
-```r
-summaries = summaries(
-  commands = commands(
-    mse = mse_summary(..dataset.., ..analysis..),
-    coef = coefficients_summary(..analysis..)), 
-  analyses = analyses, datasets = datasets)
-```
-
+    ```r
+    summaries = summaries(
+      commands = commands(
+        mse = mse_summary(..dataset.., ..analysis..),
+        coef = coefficients_summary(..analysis..)), 
+      analyses = analyses, datasets = datasets)
+    ```
 4. Gather the summaries into manageable lists (or matrices using `gather(..., aggregator = "cbind")`.
-
-```r
-mse = gather(summaries[1:6,], target = "mse")
-coef = gather(summaries[7:12,], target = "coef")
-```
-
+    ```r
+    mse = gather(summaries[1:6,], target = "mse")
+    coef = gather(summaries[7:12,], target = "coef")
+    ```
 5. Compute output on the summaries.
-
-```r
-output = commands(
-  coef_table = do.call(I("rbind"), coef),
-  coef.csv = write.csv(coef_table, target_name),
-  mse_vector = unlist(mse)
-)
-```
-
+    ```r
+    output = commands(
+      coef_table = do.call(I("rbind"), coef),
+      coef.csv = write.csv(coef_table, target_name),
+      mse_vector = unlist(mse)
+    )
+    ```
 6. Generate plots.
-
-```r
-plots = commands(
-  mse.pdf = hist(mse_vector, col = I("black"))
-)
-plots$plot = TRUE
-```
-
+    ```r
+    plots = commands(mse.pdf = hist(mse_vector, col = I("black")))
+    plots$plot = TRUE
+    ```
 7. Compile reports, [`knitr`](http://yihui.name/knitr/) or otherwise.
-
-```r
-reports = data.frame(target = strings(markdown.md, latex.tex),
-  depends = c("poisson32, coef_table, coef.csv", ""))
-reports$knitr = TRUE
-```
-
+    ```r
+    reports = data.frame(target = strings(markdown.md, latex.tex),
+      depends = c("poisson32, coef_table, coef.csv", ""))
+    reports$knitr = TRUE
+    ```
+    
 With these stages of the workflow planned, `workflow.R` gathers all the 
 [`remake`](https://github.com/richfitz/remake) targets in one [YAML](http://yaml.org/)-like list
 
@@ -139,7 +124,7 @@ targets = targets(datasets = datasets, analyses = analyses, summaries = summarie
   mse = mse, coef = coef, output = output, plots = plots, reports = reports)
 ```
 
-and generates the [`remake.yml`](https://github.com/richfitz/remake) file and [Makefile](https://www.gnu.org/software/make/) to run or update the workflow reporducibly.
+and generates the [`remake.yml`](https://github.com/richfitz/remake) file and the [Makefile](https://www.gnu.org/software/make/) to run or update the workflow reporducibly.
 
 
 ```r
@@ -147,11 +132,11 @@ workflow(targets, sources = "code.R", packages = "MASS",
   begin = c("# Prepend this", "# to the Makefile."))
 ```
 
-All that remains is to actually run or update the workflow with `remake::make()` or `system("make")` or `system("make -j 4")`, etc.
+All that remains is to actually run or update the workflow with `remake::make()` or `system("make")` or `system("make -j 2")`, etc.
 
 # Running intermediate stages
 
-You can run each intermediate stage by itself (conditional, of course, on the dependencies). For example, to just run the summaries and nothing else afterwards, use 
+You can run each intermediate stage by itself (conditional, of course, on the dependencies). For example, to just build the summaries and then stop, use 
 
 ```r
 remake::make("summaries")
@@ -163,7 +148,7 @@ or
 system("make summaries")
 ```
 
-To clean up your work and remove all files generated from running the workflow
+To remove the intermediate files and final results, run
 
 ```r
 remake::make("clean")
@@ -177,7 +162,7 @@ system("make clean")
 
 # The framework
 
-At each stage (`datasets`, `analyses`, `summaries`, `mse`, etc.), the user supplies named R commands. The commands are then arranged into a data frame. For example,
+At each stage (`datasets`, `analyses`, `summaries`, `mse`, etc.), the user supplies named R commands. The commands are then arranged into a data frame, such as the `datasets` data frame from Example 1.
 
 ```r
 > datasets
@@ -187,7 +172,7 @@ At each stage (`datasets`, `analyses`, `summaries`, `mse`, etc.), the user suppl
 3 poisson64 poisson_dataset(n = 64)
 ```
 
-The `target` is the name of the object to be generated, and `command` is a field in the [`remake.yml`](https://github.com/richfitz/remake) file. When additional fields are introduced in future versions of [`remake`](https://github.com/richfitz/remake) file, the user can simply add to them to the data frame. In [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R), the `plot` and `knitr` fields were already added manually to the `plots` and `reports` data frames, respectively. Recall from [`remake`](https://github.com/richfitz/remake) that setting `plot` to `TRUE` automatically sends output to a plot
+Above, each row stands for an individual [`remake`](https://github.com/richfitz/remake) target, and the `target` column contains the name of the target. Each command is the R function call that produces its respective target. With the exception of "`target`", each column of each  data frame represents a target-specific field in the [`remake.yml`](https://github.com/richfitz/remake) file. If additional fields are needed, just append the appropriate columns to the data frame. In [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R), the `plot` and `knitr` fields were added this way to the `plots` and `reports` data frames, respectively. Recall from [`remake`](https://github.com/richfitz/remake) that setting `plot` to `TRUE` automatically sends the output of the command to a plot
 
 ```r
 > plots
@@ -204,9 +189,9 @@ and setting `knitr` to `TRUE` compiles `.md` and `.tex` target files from `.Rmd`
 2   latex.tex   
 ```
 
-Above, and in the general case, each `depends` field is a character string of comma-separated [`remake`](https://github.com/richfitz/remake) dependencies. Dependencies that are arguments to functions in the [`remake`](https://github.com/richfitz/remake) `command` field are automatically resolved and should not be restated in `depends`. For reports, however, every dependency must be explicitly given.
+Above, and in the general case, each `depends` field is a character string of comma-separated [`remake`](https://github.com/richfitz/remake) dependencies. Dependencies that are arguments to commands are automatically resolved and should not be restated in `depends`. However, for [`knitr`](http://yihui.name/knitr/) reports, every dependency must be explicitly given in the `depends` field.
 
-In generating the `analyses` and `summaries` data frames, you may have noticed the `..dataset..` and `..analysis..` symbols. Those are wildcard placeholders indicating that the respective commands will iterate over each dataset and each analysis of each dataset, respectively. The `analyses()` function turns 
+In generating the `analyses` and `summaries` data frames, you may have noticed the `..dataset..` and `..analysis..` symbols. Those are wildcard placeholders indicating that the respective commands will iterate over each dataset and each analysis of each dataset. The `analyses()` function turns 
 
 ```r
 > commands(linear = linear_analysis(..dataset..), quadratic = quadratic_analysis(..dataset..))
@@ -254,9 +239,9 @@ into
 12 coef_quadratic_poisson64   coefficients_summary(quadratic_poisson64)
 ```
 
-# Where's my output?
+# Where is my output?
 
-Intermediate objects such as datasets, analyses, and summaries are maintained in [`remake`](https://github.com/richfitz/remake)'s hidden [`storr`](https://github.com/richfitz/storr) cache (`.remake/objects/`). At any point in the workflow, you check the available objects using `recallable()` and load an object using `recall()`. After running Example 1, you can load the `parallelRemake` package and explore. 
+Intermediate objects such as datasets, analyses, and summaries are maintained in [`remake`](https://github.com/richfitz/remake)'s hidden [`storr`](https://github.com/richfitz/storr) cache, located in the hidden `.remake/objects/` folder. To inspect your workflow, you can list the generated objects using `parallelRemake::recallable()` and load an object using `parallelRemake::recall()`. After running Example 1, we see the following.
 
 ```r
 > library(parallelRemake)
@@ -295,7 +280,7 @@ Intermediate objects such as datasets, analyses, and summaries are maintained in
 > 
 ```
 
-Be sure to avoid `recall()` and `recallable()` in serious workflows since changes using these functions are not reproducibly tracked. 
+**Do not integrate `recall()` or `recallable()` into serious production-level workflows because operations on the [`storr`](https://github.com/richfitz/storr) cache are not reproducibly tracked.**
 
 # High-performance computing
 
@@ -309,13 +294,13 @@ workflow(...,
 ```
 
 where `<ARGS>` stands for additional arguments to `srun`. Then, once the [Makefile](https://www.gnu.org/software/make/) is generated, you can run the workflow with
-`nohup make -j [N] &` in the command line, where `[N]` is the number of simultaneous tasks.
-For other task managers such as [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System), such an approach may not be possible. Regardless of the system, be sure that all nodes point to the same working directory so that they share the same `.remake` [storr](https://github.com/richfitz/storr) cache.
+`nohup make -j [N] &` in the command line, where `[N]` is the maximum number of simultaneous processes.
+For other task managers such as [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System), such an approach may not be possible because there may not be a shell-like equivalent to `srun`. Regardless of the system, be sure that all nodes point to the same working directory so that they share the same `.remake` [storr](https://github.com/richfitz/storr) cache.
 
 
 # Use with the [downsize](https://github.com/wlandau/downsize) package
 
-You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code. That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full workload. In the example, just include `downsize` in `packages` inside [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) and replace the top few lines of [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) with the following.
+You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code (i.e., [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R)). That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full load. In Example 1, simply include `"downsize"` in the `packages` argument to `workflow()` and replace the top few lines of [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) with the following.
 
 ```{r}
 library(downsize)
@@ -330,9 +315,9 @@ poisson_dataset = function(n = 16){
 }
 ```
 
-The call `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `ds` function. The command `ds(A, ...)` says "Downsize A to a smaller object when `getOption("downsize")` is `TRUE`". For the full scaled-up workflow, just delete the first two lines or replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild things when options are changed, so you'll have to run `make clean` whenever you change the `downsize` option.
+Above, `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `ds()` function. The command `ds(A, ...)` says "Downsize A to a some other object when `getOption("downsize")` is `TRUE`". To switch to the full scaled-up workflow, just delete the first two lines or replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild targets in response to changes to global options, so you will have to run `make clean`, etc. whenever you scale up or down.
 
 
-# Workflows that don't fit the mold
+# Flexibility
 
-Some workflows don't fit the rigid structure of [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) but could still benefit from the automated [`remake.yml`](https://github.com/richfitz/remake) and [Makefile](https://www.gnu.org/software/make/) generation of `remakeGenerator`. That's why you can customize your own stages as arguments to `targets()`. Also, the `expand()` and `evaluate()` functions provide additional flexibility. `expand()` is a convenient way to replicate commands, and `evaluate()` lets you create and evaluate your own wildcard placeholders. See [Example 2](https://github.com/wlandau/remakeGenerator/tree/master/inst/example2), which almost the same as [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) except that it uses `expand()` and `evaluate()` explicitly. 
+Some workflows do not fit the rigid structure of [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) but could still benefit from the automated generation of [`remake.yml`](https://github.com/richfitz/remake) files and [Makefiles](https://www.gnu.org/software/make/). If you supply the appropriate data frames to the `targets()` function, you can customize your own analyses. Here, the `expand()` and `evaluate()` functions are key. The `expand()` function replicates targets generated by the same commands, and the `evaluate()` function lets you create and evaluate your own wildcard placeholders. For a demonstration, see [Example 2](https://github.com/wlandau/remakeGenerator/tree/master/inst/example2), which almost the same as [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) except that it uses `expand()` and `evaluate()` explicitly. 
