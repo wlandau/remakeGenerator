@@ -135,7 +135,7 @@ targets = targets(datasets = datasets, analyses = analyses, summaries = summarie
   mse = mse, coef = coef, output = output, plots = plots, reports = reports)
 ```
 
-and then generates the [`remake.yml`](https://github.com/richfitz/remake) file and the [Makefile](https://www.gnu.org/software/make/) (i.e., tools to run or update the workflow reporducibly).
+and then generates the [`remake.yml`](https://github.com/richfitz/remake) file and the [Makefile](https://www.gnu.org/software/make/) (tools to run or update the workflow reporducibly).
 
 
 ```r
