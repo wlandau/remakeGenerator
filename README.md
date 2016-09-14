@@ -247,12 +247,13 @@ into
 Setting the `gather` argument in `summaries()` to `c("c", "rbind")` prepends the following two rows to the above data frame.
 
 ```r
-  target
+    target
 1   coef
-2    mse
-                                                                                                                                                                                                                                                                                                        command
-1 rbind(coef_linear_normal16 = coef_linear_normal16, coef_linear_poisson32 = coef_linear_poisson32, coef_linear_poisson64 = coef_linear_poisson64, coef_quadratic_normal16 = coef_quadratic_normal16, coef_quadratic_poisson32 = coef_quadratic_poisson32, coef_quadratic_poisson64 = coef_quadratic_poisson64)
-2                 c(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32 = mse_linear_poisson32, mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16 = mse_quadratic_normal16, mse_quadratic_poisson32 = mse_quadratic_poisson32, mse_quadratic_poisson64 = mse_quadratic_poisson64)
+2   mse
+
+    command
+1   rbind(coef_linear_normal16 = coef_linear_normal16, coef_linear_poisson32 = coef_linear_poisson32, coef_linear_poisson64 = coef_linear_poisson64, coef_quadratic_normal16 = coef_quadratic_normal16, coef_quadratic_poisson32 = coef_quadratic_poisson32, coef_quadratic_poisson64 = coef_quadratic_poisson64)
+2   c(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32 = mse_linear_poisson32, mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16 = mse_quadratic_normal16, mse_quadratic_poisson32 = mse_quadratic_poisson32, mse_quadratic_poisson64 = mse_quadratic_poisson64)
 ```
 
 These top two rows contain instructions to gather the summaries together into manageable objects. The default value of `gather` is a character vector with entries `"list"`.
