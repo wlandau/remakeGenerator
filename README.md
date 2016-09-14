@@ -273,10 +273,10 @@ Intermediate objects such as datasets, analyses, and summaries are maintained in
 [11] "mse"                      "mse_linear_normal16"     
 [13] "mse_linear_poisson32"     "mse_linear_poisson64"    
 [15] "mse_quadratic_normal16"   "mse_quadratic_poisson32" 
-[17] "mse_quadratic_poisson64"  "mse_vector"              
-[19] "normal16"                 "poisson32"               
-[21] "poisson64"                "quadratic_normal16"      
-[23] "quadratic_poisson32"      "quadratic_poisson64"   
+[17] "mse_quadratic_poisson64"  "normal16"                
+[19] "poisson32"                "poisson64"               
+[21] "quadratic_normal16"       "quadratic_poisson32"     
+[23] "quadratic_poisson64"   
 > recall("normal16")
             x        y
 1   1.5500328 4.226192
