@@ -298,7 +298,7 @@ Intermediate objects such as datasets, analyses, and summaries are maintained in
 > 
 ```
 
-**Do not integrate `recall()` or `recallable()` into serious production-level workflows because operations on the [`storr`](https://github.com/richfitz/storr) cache are not reproducibly tracked.**
+**Do not use `recall()` or `recallable()` in serious production-level workflows because operations on the [`storr`](https://github.com/richfitz/storr) cache are not reproducibly tracked.**
 
 # High-performance computing
 
