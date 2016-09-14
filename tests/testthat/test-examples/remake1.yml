@@ -1,0 +1,120 @@
+packages: MASS
+sources: code.R
+targets:
+  all:
+    depends:
+    - datasets
+    - analyses
+    - summaries
+    - mse
+    - coef
+    - output
+    - plots
+    - reports
+  datasets:
+    depends:
+    - normal16
+    - poisson32
+    - poisson64
+  analyses:
+    depends:
+    - linear_normal16
+    - linear_poisson32
+    - linear_poisson64
+    - quadratic_normal16
+    - quadratic_poisson32
+    - quadratic_poisson64
+  summaries:
+    depends:
+    - mse_linear_normal16
+    - mse_linear_poisson32
+    - mse_linear_poisson64
+    - mse_quadratic_normal16
+    - mse_quadratic_poisson32
+    - mse_quadratic_poisson64
+    - coef_linear_normal16
+    - coef_linear_poisson32
+    - coef_linear_poisson64
+    - coef_quadratic_normal16
+    - coef_quadratic_poisson32
+    - coef_quadratic_poisson64
+  output:
+    depends:
+    - coef.csv
+    - mse_vector
+  plots:
+    depends:
+    - mse.pdf
+  reports:
+    depends:
+    - markdown.md
+    - latex.tex
+  normal16:
+    command: normal_dataset(n = 16)
+  poisson32:
+    command: poisson_dataset(n = 32)
+  poisson64:
+    command: poisson_dataset(n = 64)
+  linear_normal16:
+    command: linear_analysis(normal16)
+  linear_poisson32:
+    command: linear_analysis(poisson32)
+  linear_poisson64:
+    command: linear_analysis(poisson64)
+  quadratic_normal16:
+    command: quadratic_analysis(normal16)
+  quadratic_poisson32:
+    command: quadratic_analysis(poisson32)
+  quadratic_poisson64:
+    command: quadratic_analysis(poisson64)
+  coef_linear_normal16:
+    command: coefficients_summary(linear_normal16)
+  coef_linear_poisson32:
+    command: coefficients_summary(linear_poisson32)
+  coef_linear_poisson64:
+    command: coefficients_summary(linear_poisson64)
+  coef_quadratic_normal16:
+    command: coefficients_summary(quadratic_normal16)
+  coef_quadratic_poisson32:
+    command: coefficients_summary(quadratic_poisson32)
+  coef_quadratic_poisson64:
+    command: coefficients_summary(quadratic_poisson64)
+  mse_linear_normal16:
+    command: mse_summary(normal16, linear_normal16)
+  mse_linear_poisson32:
+    command: mse_summary(poisson32, linear_poisson32)
+  mse_linear_poisson64:
+    command: mse_summary(poisson64, linear_poisson64)
+  mse_quadratic_normal16:
+    command: mse_summary(normal16, quadratic_normal16)
+  mse_quadratic_poisson32:
+    command: mse_summary(poisson32, quadratic_poisson32)
+  mse_quadratic_poisson64:
+    command: mse_summary(poisson64, quadratic_poisson64)
+  mse:
+    command: list(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32
+      = mse_linear_poisson32, mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16
+      = mse_quadratic_normal16, mse_quadratic_poisson32 = mse_quadratic_poisson32,
+      mse_quadratic_poisson64 = mse_quadratic_poisson64)
+  coef:
+    command: rbind(coef_linear_normal16 = coef_linear_normal16, coef_linear_poisson32
+      = coef_linear_poisson32, coef_linear_poisson64 = coef_linear_poisson64, coef_quadratic_normal16
+      = coef_quadratic_normal16, coef_quadratic_poisson32 = coef_quadratic_poisson32,
+      coef_quadratic_poisson64 = coef_quadratic_poisson64)
+  coef.csv:
+    command: write.csv(coef, target_name)
+  mse_vector:
+    command: unlist(mse)
+  mse.pdf:
+    command: hist(mse_vector, col = I("black"))
+    plot: TRUE
+  latex.tex:
+    depends: []
+    knitr: TRUE
+  markdown.md:
+    depends:
+    - poisson32
+    - coef
+    - coef.csv
+    knitr: TRUE
+

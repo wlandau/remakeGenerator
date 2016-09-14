@@ -2,7 +2,7 @@
 context("expand")
 source("utils.R")
 
-test_that("Function expand is correct.", {
+test_that("Function expand() is correct.", {
   testwd("expand-ok")
   expect_equal(expand(example_datasets()), example_datasets())
   expect_equal(expand(example_datasets(), values = c("rep1", "rep2", "rep3")), data.frame(

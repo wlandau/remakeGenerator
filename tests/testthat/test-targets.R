@@ -2,7 +2,7 @@
 context("targets")
 source("utils.R")
 
-test_that("Function targets is correct.", {
+test_that("Function targets() is correct.", {
   testwd("targets-ok")
   d1 = example_datasets()
   d1$depends = c("u, v", "w, x, y, z")

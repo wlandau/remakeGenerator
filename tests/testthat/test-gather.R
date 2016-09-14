@@ -2,7 +2,7 @@
 context("gather")
 source("utils.R")
 
-test_that("Function gather is correct.", {
+test_that("Function gather() is correct.", {
   testwd("gather-ok")
   expect_equal(gather(example_analyses()), data.frame(
     target = "target",

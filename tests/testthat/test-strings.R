@@ -2,7 +2,7 @@
 context("strings")
 source("utils.R")
 
-test_that("Function strings is correct.", {
+test_that("Function strings() is correct.", {
   testwd("strings-ok")
   expect_equal(character(0), strings())
   expect_equal("1", strings(1))

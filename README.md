@@ -1,12 +1,13 @@
 # remakeGenerator
 
-The `remakeGenerator` package is a helper add-on for [`remake`](https://github.com/richfitz/remake), an awesome reproducible build system for R. If you haven't done so already, go learn [`remake`](https://github.com/richfitz/remake)! Once you do that, you will be ready to use `remakeGenerator`. With `remakeGenerator`, your long and cumbersome workflows will be
+The `remakeGenerator` package is a helper add-on for [`remake`](https://github.com/richfitz/remake), a [Makefile](https://www.gnu.org/software/make/)-like reproducible build system for R. If you haven't done so already, go learn [`remake`](https://github.com/richfitz/remake)! Once you do that, you will be ready to use `remakeGenerator`. With `remakeGenerator`, your long and cumbersome workflows will be
 
 - **Quick to set up**. You can plan a large workflow with a small amount of code.
 - **Reproducible**. Reproduce computation with `remake::make()` or [GNU Make](https://www.gnu.org/software/make/).
 - **Development-friendly**. Thanks to [`remake`](https://github.com/richfitz/remake), whenever you change your code, your next computation will only run the parts that are new or out of date.
 - **Parallelizable**. Distribute your workflow over multiple parallel processes with a single flag in [GNU Make](https://www.gnu.org/software/make/).
 
+`RemakeGenerator` accomplishes this by generating [YAML](http://yaml.org/) files for [`remake`](https://github.com/richfitz/remake) that would be too big to type manually.
 
 # Installation
 
@@ -38,7 +39,7 @@ library(remakeGenerator)
 example_remakeGenerator(index = 1)
 ```
 
-Run [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) to produce the required  [`remake`](https://github.com/richfitz/remake) file `remake.yml`, along with the optional [Makefile](https://www.gnu.org/software/make/).
+Run [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) to produce the required  [`remake`](https://github.com/richfitz/remake) file `remake.yml`, along with the optional [Makefile](https://www.gnu.org/software/make/). 
 
 ```r
 source("workflow.R")
@@ -61,6 +62,8 @@ Alternatively, distribute the work over four parallel processes with
 ```r
 system("make -j 4")
 ```
+
+Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) and `remake.yml` rely on the functions defined in  [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R). For extra credit, change the body of one of these functions (something more significant than whitespace or comments) and then run `remake::make()` again. Only the targets that depend on that function are recomputed. The rest of your workflow is left alone, which saves time.
 
 # A walk through [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R)
 

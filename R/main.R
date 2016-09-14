@@ -72,7 +72,9 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand = TRUE){
   values = rep(values, length.out = dim(y)[1])
   y$command = Vectorize(function(value, command) gsub(wildcard, value, command))(values, y$command)
   rownames(x) = rownames(y) = NULL
-  rbind(y, x[!matches,])
+  out = rbind(y, x[!matches,])
+  rownames(out) = NULL
+  out
 }
 
 #' @title Function \code{gather}
