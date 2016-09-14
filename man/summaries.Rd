@@ -4,14 +4,18 @@
 \alias{summaries}
 \title{Function \code{summaries}}
 \usage{
-summaries(commands, analyses, datasets)
+summaries(commands, analyses, datasets, gather = rep("list",
+  dim(commands)[1]))
 }
 \arguments{
-\item{commands}{output of \code{commands(...)}}
+\item{commands}{Data frame output of \code{commands(...)}}
 
 \item{analyses}{Data frame of commands to generate analyses}
 
 \item{datasets}{Data frame of commands to generate datasets}
+
+\item{gather}{Character vector, names of functions to gather the summaries.
+If not \code{NULL}, length must be the number of rows in \code{commands}.}
 }
 \value{
 preprocessed data frame of analysis commands

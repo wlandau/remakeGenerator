@@ -6,8 +6,6 @@ targets:
     - datasets
     - analyses
     - summaries
-    - mse
-    - coef
     - output
     - plots
     - reports
@@ -26,6 +24,8 @@ targets:
     - quadratic_poisson64
   summaries:
     depends:
+    - coef
+    - mse
     - mse_linear_normal16
     - mse_linear_poisson32
     - mse_linear_poisson64
@@ -41,7 +41,6 @@ targets:
   output:
     depends:
     - coef.csv
-    - mse_vector
   plots:
     depends:
     - mse.pdf
@@ -67,6 +66,11 @@ targets:
     command: quadratic_analysis(poisson32)
   quadratic_poisson64:
     command: quadratic_analysis(poisson64)
+  coef:
+    command: rbind(coef_linear_normal16 = coef_linear_normal16, coef_linear_poisson32
+      = coef_linear_poisson32, coef_linear_poisson64 = coef_linear_poisson64, coef_quadratic_normal16
+      = coef_quadratic_normal16, coef_quadratic_poisson32 = coef_quadratic_poisson32,
+      coef_quadratic_poisson64 = coef_quadratic_poisson64)
   coef_linear_normal16:
     command: coefficients_summary(linear_normal16)
   coef_linear_poisson32:
@@ -79,6 +83,11 @@ targets:
     command: coefficients_summary(quadratic_poisson32)
   coef_quadratic_poisson64:
     command: coefficients_summary(quadratic_poisson64)
+  mse:
+    command: c(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32 = mse_linear_poisson32,
+      mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16 = mse_quadratic_normal16,
+      mse_quadratic_poisson32 = mse_quadratic_poisson32, mse_quadratic_poisson64 =
+      mse_quadratic_poisson64)
   mse_linear_normal16:
     command: mse_summary(normal16, linear_normal16)
   mse_linear_poisson32:
@@ -91,22 +100,10 @@ targets:
     command: mse_summary(poisson32, quadratic_poisson32)
   mse_quadratic_poisson64:
     command: mse_summary(poisson64, quadratic_poisson64)
-  mse:
-    command: list(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32
-      = mse_linear_poisson32, mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16
-      = mse_quadratic_normal16, mse_quadratic_poisson32 = mse_quadratic_poisson32,
-      mse_quadratic_poisson64 = mse_quadratic_poisson64)
-  coef:
-    command: rbind(coef_linear_normal16 = coef_linear_normal16, coef_linear_poisson32
-      = coef_linear_poisson32, coef_linear_poisson64 = coef_linear_poisson64, coef_quadratic_normal16
-      = coef_quadratic_normal16, coef_quadratic_poisson32 = coef_quadratic_poisson32,
-      coef_quadratic_poisson64 = coef_quadratic_poisson64)
   coef.csv:
     command: write.csv(coef, target_name)
-  mse_vector:
-    command: unlist(mse)
   mse.pdf:
-    command: hist(mse_vector, col = I("black"))
+    command: hist(mse, col = I("black"))
     plot: TRUE
   latex.tex:
     depends: []

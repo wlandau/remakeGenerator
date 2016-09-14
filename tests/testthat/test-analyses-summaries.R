@@ -37,17 +37,19 @@ s2 = summaries(
   commands = commands(
     mse = mse_summary(..dataset.., ..analysis..),
     coef = coefficients_summary(..analysis..)), 
-  analyses = a2, datasets = d2)
+  analyses = a2, datasets = d2, gather = strings(c, rbind))
+
+s3 = summaries(
+  commands = commands(
+    mse = mse_summary(..dataset.., ..analysis..),
+    coef = coefficients_summary(..analysis..)), 
+  analyses = a2, datasets = d2, gather = NULL)
 
 test_that("Functions analyses() and summaries() are correct.", {
   testwd("analyses-summaries-ok")
-  expect_equal(a1, read.table(file.path("..", "test-analyses-summaries", "a1.txt"),
-    stringsAsFactors = F, head = T))
-  expect_equal(a2, read.table(file.path("..", "test-analyses-summaries", "a2.txt"),
-    stringsAsFactors = F, head = T))
-  expect_equal(s1, read.table(file.path("..", "test-analyses-summaries", "s1.txt"),
-    stringsAsFactors = F, head = T))
-  expect_equal(s2, read.table(file.path("..", "test-analyses-summaries", "s2.txt"),
-    stringsAsFactors = F, head = T))
+  for(x in strings(a1, a2, s1, s2, s3))
+    expect_equal(get(x), 
+      read.table(file.path("..", "test-analyses-summaries", paste0(x, ".txt")),
+        stringsAsFactors = F, head = T))
   testrm()
 })

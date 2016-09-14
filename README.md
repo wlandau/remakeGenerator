@@ -90,39 +90,30 @@ Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master
       datasets = datasets)
     ```
     
-3. Summarize each analysis of each dataset
+3. Summarize each analysis of each dataset and gather the summaries into manageable objects.
 
     ```r
     summaries = summaries(
       commands = commands(
         mse = mse_summary(..dataset.., ..analysis..),
         coef = coefficients_summary(..analysis..)), 
-      analyses = analyses, datasets = datasets)
+      analyses = analyses, datasets = datasets, gather = strings(c, rbind))
     ```
     
-4. Gather the summaries into manageable lists (or matrices using `gather(..., aggregator = "rbind")`).
+4. Compute output on the summaries.
 
     ```r
-    mse = gather(summaries[1:6,], target = "mse")
-    coef = gather(summaries[7:12,], target = "coef", aggregator = "rbind")
+    output = commands(coef.csv = write.csv(coef, target_name))
     ```
     
-5. Compute output on the summaries.
+5. Generate plots.
 
     ```r
-    output = commands(
-      coef.csv = write.csv(coef, target_name),
-      mse_vector = unlist(mse))
-    ```
-    
-6. Generate plots.
-
-    ```r
-    plots = commands(mse.pdf = hist(mse_vector, col = I("black")))
+    plots = commands(mse.pdf = hist(mse, col = I("black")))
     plots$plot = TRUE
     ```
     
-7. Compile reports, [`knitr`](http://yihui.name/knitr/) or otherwise.
+6. Compile reports, [`knitr`](http://yihui.name/knitr/) or otherwise.
 
     ```r
     reports = data.frame(target = strings(markdown.md, latex.tex),
@@ -134,8 +125,8 @@ With these stages of the workflow planned, `workflow.R` collects all the
 [`remake`](https://github.com/richfitz/remake) targets into one [YAML](http://yaml.org/)-like list
 
 ```r
-targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
-  mse = mse, coef = coef, output = output, plots = plots, reports = reports)
+targets = targets(datasets = datasets, analyses = analyses, 
+  summaries = summaries, output = output, plots = plots, reports = reports)
 ```
 
 and then generates the [`remake.yml`](https://github.com/richfitz/remake) file and the [Makefile](https://www.gnu.org/software/make/) (tools to run or update the workflow reporducibly).
@@ -226,7 +217,7 @@ into
 6 quadratic_poisson64 quadratic_analysis(poisson64)
 ```
 
-and the `summaries()` function turns
+and `summaries(..., gather = NULL)` turns
 
 ```r
 > commands(mse = mse_summary(..dataset.., ..analysis..), coef = coefficients_summary(..analysis..))
@@ -252,6 +243,19 @@ into
 11 coef_quadratic_poisson32   coefficients_summary(quadratic_poisson32)
 12 coef_quadratic_poisson64   coefficients_summary(quadratic_poisson64)
 ```
+
+If the `gather` argument in `summaries()` were set to `c("c", "rbind")`, the following two rows would have been prepended to the above data frame.
+
+```r
+  target
+1   coef
+2    mse
+                                                                                                                                                                                                                                                                                                        command
+1 rbind(coef_linear_normal16 = coef_linear_normal16, coef_linear_poisson32 = coef_linear_poisson32, coef_linear_poisson64 = coef_linear_poisson64, coef_quadratic_normal16 = coef_quadratic_normal16, coef_quadratic_poisson32 = coef_quadratic_poisson32, coef_quadratic_poisson64 = coef_quadratic_poisson64)
+2                 c(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32 = mse_linear_poisson32, mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16 = mse_quadratic_normal16, mse_quadratic_poisson32 = mse_quadratic_poisson32, mse_quadratic_poisson64 = mse_quadratic_poisson64)
+```
+
+These are instructions to gather the summaries together into manageable objects. The default value of `gather` is a character vector with entries `"list"`.
 
 # Where is my output?
 

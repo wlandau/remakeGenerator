@@ -83,11 +83,11 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand = TRUE){
 #' @return data frame with a command to gather the targets in \code{x}
 #' @param x argument data frame
 #' @param target name of aggregated output object
-#' @param aggregator function used to gather the targets
-gather = function(x, target = "target", aggregator = "list"){
+#' @param gather function used to gather the targets
+gather = function(x, target = "target", gather = "list"){
   command = paste(x$target, "=", x$target)
   command = paste(command, collapse = ", ")
-  command = paste0(aggregator, "(", command, ")")
+  command = paste0(gather, "(", command, ")")
   data.frame(target = target, command = command, stringsAsFactors = F)
 }
 
@@ -177,12 +177,27 @@ analyses = function(commands, datasets){
 #' @description Helper function for the user. Preprocess a data frame of summary commands.
 #' @export 
 #' @return preprocessed data frame of analysis commands
-#' @param commands output of \code{commands(...)}
+#' @param commands Data frame output of \code{commands(...)}
 #' @param analyses Data frame of commands to generate analyses
 #' @param datasets Data frame of commands to generate datasets
-summaries = function(commands, analyses, datasets){
-  commands = evaluate(commands, wildcard = "..analysis..", values = analyses$target)
-  evaluate(commands, wildcard = "..dataset..", values = datasets$target, expand = FALSE)
+#' @param gather Character vector, names of functions to gather the summaries.
+#' If not \code{NULL}, length must be the number of rows in \code{commands}.
+summaries = function(commands, analyses, datasets, gather = rep("list", dim(commands)[1])){
+  out = commands
+  group = paste(colnames(out), collapse = "_")
+  out[[group]] = out$target
+  out = evaluate(out, wildcard = "..analysis..", values = analyses$target)
+  out = evaluate(out, wildcard = "..dataset..", values = datasets$target, expand = FALSE)
+  if(is.null(gather)){
+    out[[group]] = NULL
+    return(out)
+  }
+  top = ddply(out, group, function(x){
+    y = x[[group]][1]
+    gather(x, target = y, gather = gather[which(y == commands$target)])
+  })
+  out[[group]] = top[[group]] = NULL
+  rbind(top, out)
 }
 
 #' @title Function \code{example_remakeGenerator}

@@ -16,7 +16,7 @@ analyses = commands(
 ) %>% 
 evaluate(wildcard = "..dataset..", values = datasets$target)
 
-# Same as the summaries() function.
+# Nearly the same as the summaries() function.
 summaries = commands(
   mse = mse_summary(..dataset.., ..analysis..),
   coef = coefficients_summary(..analysis..)
@@ -24,9 +24,9 @@ summaries = commands(
 evaluate(wildcard = "..analysis..", values = analyses$target) %>% 
 evaluate(wildcard = "..dataset..", values = datasets$target, expand = FALSE)
 
-# 24 datasets to summarize rather than 12.
+# Similar to the top 2 rows of the summaries data frame from Example 1.
 mse = gather(summaries[1:12,], target = "mse")
-coef = gather(summaries[13:24,], target = "coef", aggregator = "rbind")
+coef = gather(summaries[13:24,], target = "coef", gather = "rbind")
 
 output = commands(
   coef.csv = write.csv(coef, target_name),
@@ -41,6 +41,7 @@ reports$knitr = TRUE
 
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
   mse = mse, coef = coef, output = output, plots = plots, reports = reports)
+
 workflow(targets, sources = "code.R", packages = "MASS", 
   begin = c("# Prepend this", "# to the Makefile."))
 

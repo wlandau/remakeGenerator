@@ -15,7 +15,6 @@ mse_linear_poisson64
 mse_quadratic_normal16
 mse_quadratic_poisson32
 mse_quadratic_poisson64
-mse_vector
 normal16
 poisson32
 poisson64

@@ -1,4 +1,6 @@
 "target" "command"
+"coef" "list(coef_linear_normal16 = coef_linear_normal16, coef_linear_poisson32 = coef_linear_poisson32, coef_linear_poisson64 = coef_linear_poisson64, coef_quadratic_normal16 = coef_quadratic_normal16, coef_quadratic_poisson32 = coef_quadratic_poisson32, coef_quadratic_poisson64 = coef_quadratic_poisson64)"
+"mse" "list(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32 = mse_linear_poisson32, mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16 = mse_quadratic_normal16, mse_quadratic_poisson32 = mse_quadratic_poisson32, mse_quadratic_poisson64 = mse_quadratic_poisson64)"
 "mse_linear_normal16" "mse_summary(normal16, linear_normal16)"
 "mse_linear_poisson32" "mse_summary(poisson32, linear_poisson32)"
 "mse_linear_poisson64" "mse_summary(poisson64, linear_poisson64)"

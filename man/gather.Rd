@@ -4,14 +4,14 @@
 \alias{gather}
 \title{Function \code{gather}}
 \usage{
-gather(x, target = "target", aggregator = "list")
+gather(x, target = "target", gather = "list")
 }
 \arguments{
 \item{x}{argument data frame}
 
 \item{target}{name of aggregated output object}
 
-\item{aggregator}{function used to gather the targets}
+\item{gather}{function used to gather the targets}
 }
 \value{
 data frame with a command to gather the targets in \code{x}

@@ -3,8 +3,7 @@ library(remakeGenerator)
 datasets = commands(
   normal16 = normal_dataset(n = 16),
   poisson32 = poisson_dataset(n = 32),
-  poisson64 = poisson_dataset(n = 64)
-)
+  poisson64 = poisson_dataset(n = 64))
 
 analyses = analyses(
   commands = commands(
@@ -16,16 +15,11 @@ summaries = summaries(
   commands = commands(
     mse = mse_summary(..dataset.., ..analysis..),
     coef = coefficients_summary(..analysis..)), 
-  analyses = analyses, datasets = datasets)
+  analyses = analyses, datasets = datasets, gather = strings(c, rbind))
 
-mse = gather(summaries[1:6,], target = "mse")
-coef = gather(summaries[7:12,], target = "coef", aggregator = "rbind")
+output = commands(coef.csv = write.csv(coef, target_name))
 
-output = commands(
-  coef.csv = write.csv(coef, target_name),
-  mse_vector = unlist(mse))
-
-plots = commands(mse.pdf = hist(mse_vector, col = I("black")))
+plots = commands(mse.pdf = hist(mse, col = I("black")))
 plots$plot = TRUE
 
 reports = data.frame(target = strings(markdown.md, latex.tex),
@@ -33,7 +27,8 @@ reports = data.frame(target = strings(markdown.md, latex.tex),
 reports$knitr = TRUE
 
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
-  mse = mse, coef = coef, output = output, plots = plots, reports = reports)
+  output = output, plots = plots, reports = reports)
+
 workflow(targets, sources = "code.R", packages = "MASS", 
   begin = c("# Prepend this", "# to the Makefile."))
 
