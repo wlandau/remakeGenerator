@@ -244,7 +244,7 @@ into
 12 coef_quadratic_poisson64   coefficients_summary(quadratic_poisson64)
 ```
 
-If the `gather` argument in `summaries()` were set to `c("c", "rbind")`, the following two rows would have been prepended to the above data frame.
+Setting the `gather` argument in `summaries()` to `c("c", "rbind")` prepends the following two rows to the above data frame.
 
 ```r
   target
@@ -255,7 +255,7 @@ If the `gather` argument in `summaries()` were set to `c("c", "rbind")`, the fol
 2                 c(mse_linear_normal16 = mse_linear_normal16, mse_linear_poisson32 = mse_linear_poisson32, mse_linear_poisson64 = mse_linear_poisson64, mse_quadratic_normal16 = mse_quadratic_normal16, mse_quadratic_poisson32 = mse_quadratic_poisson32, mse_quadratic_poisson64 = mse_quadratic_poisson64)
 ```
 
-These are instructions to gather the summaries together into manageable objects. The default value of `gather` is a character vector with entries `"list"`.
+These top two rows contain instructions to gather the summaries together into manageable objects. The default value of `gather` is a character vector with entries `"list"`.
 
 # Where is my output?
 
