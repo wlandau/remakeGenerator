@@ -3,7 +3,7 @@ context("evaluate")
 source("utils.R")
 
 test_that("Function evaluate() is correct.", {
-  testwd("evaluate-ok")
+  testwd("evaluate")
   expect_equal(evaluate(example_analyses()), example_analyses())
   expect_equal(evaluate(example_analyses(), wildcard = "..dataset.."), example_analyses())
   expect_equal(evaluate(example_analyses(), values = 1:3), example_analyses())
@@ -42,5 +42,5 @@ test_that("Function evaluate() is correct.", {
         "analyze2(data1)", "analyze2(data2)", "analyze2(data3)", "ls()"),
       stringsAsFactors = F))
 
-  testrm()
+  testrm("evaluate")
 })

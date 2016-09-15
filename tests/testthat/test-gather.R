@@ -3,7 +3,7 @@ context("gather")
 source("utils.R")
 
 test_that("Function gather() is correct.", {
-  testwd("gather-ok")
+  testwd("gather")
   expect_equal(gather(example_analyses()), data.frame(
     target = "target",
     command = "list(analysis1 = analysis1, analysis2 = analysis2)",
@@ -12,5 +12,5 @@ test_that("Function gather() is correct.", {
     target = "hi",
     command = "cbind(analysis1 = analysis1, analysis2 = analysis2)",
     stringsAsFactors = F))
-  testrm()
+  testrm("gather")
 })

@@ -3,7 +3,7 @@ context("targets")
 source("utils.R")
 
 test_that("Function targets() is correct.", {
-  testwd("targets-ok")
+  testwd("targets")
   d1 = example_datasets()
   d1$depends = c("u, v", "w, x, y, z")
   d2 = example_analyses()
@@ -54,5 +54,5 @@ test_that("Function targets() is correct.", {
   expect_equal(targets(datasets = d1), ld1)
   expect_equal(targets(analyses = d2), ld2)
   expect_equal(targets(datasets = d1, analyses = d2), ld3)
-  testrm()
+  testrm("targets")
 })

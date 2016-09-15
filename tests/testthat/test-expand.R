@@ -3,7 +3,7 @@ context("expand")
 source("utils.R")
 
 test_that("Function expand() is correct.", {
-  testwd("expand-ok")
+  testwd("expand")
   expect_equal(expand(example_datasets()), example_datasets())
   expect_equal(expand(example_datasets(), values = c("rep1", "rep2", "rep3")), data.frame(
     target = c("data1_rep1", "data1_rep2", "data1_rep3", 
@@ -12,5 +12,5 @@ test_that("Function expand() is correct.", {
       "df2(n = 20)", "df2(n = 20)", "df2(n = 20)"),
     check = c(T, T, T, F, F, F),
     stringsAsFactors = F))
-  testrm()
+  testrm("expand")
 })

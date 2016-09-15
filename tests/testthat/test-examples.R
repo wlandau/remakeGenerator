@@ -48,6 +48,6 @@ test_that("Examples run as expected", {
     expect_true(length(readLines("markdown.md")) > 20)
     remake::make("clean", verbose = F)
     expect_true(assert_files(4))
-    testrm()
+    testrm(paste0("example", i))
   }
 })

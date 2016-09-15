@@ -4,13 +4,10 @@ testwd = function(x){
   setwd(dir)
 }
 
-testrm = function(){
-  d1 = getwd()
+testrm = function(x){
+  dir = paste0("RUN-", x)
   setwd("..")
-  d2 = getwd()
-  d = gsub(d2, "", d1)
-  d = gsub("[^[:alnum:]|_|-]", "", d)
-  unlink(d, recursive = T)
+  unlink(dir, recursive = T)
 }
 
 #' @title Function \code{example_datasets}

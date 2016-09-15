@@ -46,10 +46,10 @@ s3 = summaries(
   analyses = a2, datasets = d2, gather = NULL)
 
 test_that("Functions analyses() and summaries() are correct.", {
-  testwd("analyses-summaries-ok")
+  testwd("analyses-summaries")
   for(x in strings(a1, a2, s1, s2, s3))
     expect_equal(get(x), 
       read.table(file.path("..", "test-analyses-summaries", paste0(x, ".txt")),
         stringsAsFactors = F, head = T))
-  testrm()
+  testrm("analyses-summaries")
 })

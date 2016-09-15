@@ -23,10 +23,7 @@ summaries = function(commands, analyses, datasets, gather = rep("list", dim(comm
   out[[group]] = out$target
   out = evaluate(out, wildcard = "..analysis..", values = analyses$target)
   out = evaluate(out, wildcard = "..dataset..", values = datasets$target, expand = FALSE)
-  if(is.null(gather)){
-    out[[group]] = NULL
-    return(out)
-  }
+  if(is.null(gather)) return(out[setdiff(names(out), group)])
   top = ddply(out, group, function(x){
     y = x[[group]][1]
     gather(x, target = y, gather = gather[which(y == commands$target)])
