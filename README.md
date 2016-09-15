@@ -113,7 +113,7 @@ Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master
     plots$plot = TRUE
     ```
     
-6. Compile reports, [`knitr`](http://yihui.name/knitr/) or otherwise.
+6. Compile [`knitr`](http://yihui.name/knitr/) reports.
 
     ```r
     reports = data.frame(target = strings(markdown.md, latex.tex),
@@ -121,7 +121,7 @@ Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master
     reports$knitr = TRUE
     ```
     
-With these stages of the workflow planned, `workflow.R` collects all the 
+With these stages of the workflow planned, [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) collects all the 
 [`remake`](https://github.com/richfitz/remake) targets into one [YAML](http://yaml.org/)-like list.
 
 ```r
@@ -296,6 +296,8 @@ Intermediate objects such as datasets, analyses, and summaries are maintained in
 16  2.3565342 4.445811
 > 
 ```
+
+The functions `create_bindings()` and `make_environment()` are alternatives from [`remake`](https://github.com/richfitz/remake) itself. Just be careful with `create_bindings()` if your project has a lot of data.
 
 **Do not use `recall()` or `recallable()` in serious production-level workflows because operations on the [`storr`](https://github.com/richfitz/storr) cache are not reproducibly tracked.**
 
