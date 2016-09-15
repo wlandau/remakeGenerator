@@ -33,34 +33,10 @@ commands = function(...) {
 #' @return YAML-like list of targets
 #' @param ... data frames of remake commands
 targets = function(...){
-  stages = lapply(list(...), function(x)
-    data.frame(lapply(x, factor2character), stringsAsFactors = FALSE))
-  stage_names = names(stages)
-  if(!length(stages)) return()
-
-  msg = "In function targets(), the supplied data frames must all have names. For example, write targets(datasets = my_data_frame, analyses = another_data_frame) instead of targets(my_data_frame, another_data_frame)."
-  if(is.null(stage_names)) stop(msg)
-  if(any(nchar(stage_names) < 1)) stop(msg)
-
-  fake_targets = list(all = list(depends = as.list(stage_names)))
-  for(stage in stage_names)
-    fake_targets[[stage]] = list(depends = as.list(stages[[stage]]$target))
-
-  real_targets = do.call("c", lapply(stages, function(x) dlply(x, colnames(x), as.list)))
-  real_targets = lapply(real_targets, function(x) {attr(x, "vars") = NULL; x})
-  names(real_targets) = lapply(real_targets, function(x) x$target)
-  real_targets = lapply(real_targets, function(x){
-    x$target = NULL
-    for(field in c("depends")) if(!is.null(x[[field]]))
-      x[[field]] = lapply(unlist(strsplit(x[[field]], split = ",")), stri_trim)
-    x
-  })
-
-  for(i in intersect(names(real_targets), names(fake_targets)))
-    fake_targets[[i]] = NULL
-  out = c(fake_targets, real_targets)
-  if(anyDuplicated(names(out))) stop("Targets must not have duplicate names.")
-  out
+  if(!length(stages <- clean_stages(list(...)))) return()
+  fake_targets = fake_targets(stages)
+  real_targets = real_targets(stages)
+  finalize_targets(fake_targets, real_targets)
 }
 
 #' @title Function \code{workflow}
