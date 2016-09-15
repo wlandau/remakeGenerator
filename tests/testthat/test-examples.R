@@ -33,7 +33,7 @@ test_that("Examples run as expected", {
       readLines(file.path("..", "test-examples", paste0("Makefile", i)))[-1])
     expect_equal(readLines("remake.yml"), 
       readLines(file.path("..", "test-examples", paste0("remake", i, ".yml"))))
-    expect_error(parallelRemake::recallable())
+    expect_equal(parallelRemake::recallable(), character(0))
     remake::make(verbose = F)
     expect_equal(parallelRemake::recallable(), 
       scan(file.path("..", "test-examples", paste0("recallable", i, ".txt")), 
