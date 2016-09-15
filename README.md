@@ -122,15 +122,14 @@ Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master
     ```
     
 With these stages of the workflow planned, `workflow.R` collects all the 
-[`remake`](https://github.com/richfitz/remake) targets into one [YAML](http://yaml.org/)-like list
+[`remake`](https://github.com/richfitz/remake) targets into one [YAML](http://yaml.org/)-like list.
 
 ```r
 targets = targets(datasets = datasets, analyses = analyses, 
   summaries = summaries, output = output, plots = plots, reports = reports)
 ```
 
-and then generates the [`remake.yml`](https://github.com/richfitz/remake) file and the [Makefile](https://www.gnu.org/software/make/) (tools to run or update the workflow reporducibly).
-
+Finally, it generates the [`remake.yml`](https://github.com/richfitz/remake) file and then an overarching [Makefile](https://www.gnu.org/software/make/) via [`parallelRemake`](https://github.com/wlandau/parallelRemake). (Write `workflow(..., makefile = NULL)` to suppress the [Makefile](https://www.gnu.org/software/make/).)
 
 ```r
 workflow(targets, sources = "code.R", packages = "MASS", 
