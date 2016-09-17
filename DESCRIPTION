@@ -1,11 +1,11 @@
 Package: remakeGenerator
-Type: Package
-Title: Generates remake workflows
-Version: 0.0
-Date: 2016-09-05
-Author: Will Landau
-Maintainer: Will Landau <will.landau@gmail.com>
-Description: Generates remake/YAML files and Makefiles with minimal R code.
+Title: Automated Generation of Remake-Style Workflows
+Version: 0.0.0
+Date: 2016-09-17
+Authors@R: person("Landau", "William", email = "will.landau@gmail.com",
+                  role = c("aut", "cre"))
+Description: Generate large workflows that uses remake (Rich FitzJohn, https://richfitz.github.io/)
+    using minimal R code.
 License: GPL (>=3)
 Imports:
     parallelRemake,
