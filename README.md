@@ -320,26 +320,26 @@ where `<ARGS>` stands for additional arguments to `srun`. Then, once the [Makefi
 `nohup make -j [N] &` in the command line, where `[N]` is the maximum number of simultaneous processes.
 For other task managers such as [PBS](https://en.wikipedia.org/wiki/Portable_Batch_System), such an approach may not be possible because there may not be a shell-like equivalent to `srun`. Regardless of the system, be sure that all nodes point to the same working directory so that they share the same `.remake` [storr](https://github.com/richfitz/storr) cache.
 
-
 # Use with the [downsize](https://github.com/wlandau/downsize) package
 
-You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code (i.e., [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R)). That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full load. In Example 1, simply include `"downsize"` in the `packages` argument to `workflow()` and replace the top few lines of [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) with the following.
+You may want to use the [downsize](https://github.com/wlandau/downsize) package within your custom R source code (i.e., [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R)). That way, you can run a quick scaled-down version of your workflow for debugging and testing before you run the full load. There are many ways to use [downsize](https://github.com/wlandau/downsize). In Example 1, for instance, you could include `"downsize"` in the `packages` argument to `workflow()` and replace the top few lines of [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R) with the following.
 
-```{r}
+```{r, eval = F}
 library(downsize)
-scale_down()
+downsize() # same as scale_down()
 
 normal_dataset = function(n = 16){
-  ds(data.frame(x = rnorm(n, 1), y = rnorm(n, 5)), nrow = 4)
+  n = ds(n, 4)
+  data.frame(x = rnorm(n, 1), y = rnorm(n, 5))
 }
 
 poisson_dataset = function(n = 16){
-  ds(data.frame(x = rpois(n, 1), y = rpois(n, 5)), nrow = 4)
+  n = ds(n, 4)
+  data.frame(x = rpois(n, 1), y = rpois(n, 5))
 }
 ```
 
-Above, `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `ds()` function. The command `ds(A, ...)` says "Downsize A to a some other object when `getOption("downsize")` is `TRUE`". To switch to the full scaled-up workflow, just delete the first two lines or replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild targets in response to changes to global options, so you will have to run `make clean`, etc. whenever you scale up or down.
-
+Above, `downsize()` sets the `downsize` option to `TRUE`, which is a signal to the `ds()` function. The command `ds(A, ...)` says "Downsize A to a some other object when `getOption("downsize")` is `TRUE`". To switch to the full scaled-up workflow, just delete the first two lines or replace `downsize()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild targets in response to changes to global options, so you will have to run `make clean`, etc. whenever you scale up or down.
 
 # Flexibility
 
