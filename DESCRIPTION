@@ -21,6 +21,8 @@ Suggests:
     rmarkdown,
     testthat
 VignetteBuilder: knitr
+URL: https://github.com/wlandau/remakeGenerator
+BugReports: https://github.com/wlandau/remakeGenerator/issues
 Remotes:
     richfitz/remake,
     wlandau/parallelRemake
