@@ -9,10 +9,8 @@ LICENSE
 NEWS.md
 README.md
 README.html
-vignettes/model.html
-vignettes/model.log
-vignettes/tutorial.html
-vignettes/tutorial.log
+vignettes/remakeGenerator.html
+vignettes/remakeGenerator.log
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$

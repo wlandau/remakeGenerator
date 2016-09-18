@@ -12,14 +12,15 @@ Imports:
     plyr,
     stringi,
     yaml
-Depends:
-    R (>= 3.0.0)
+Depends: R (>= 3.0.0)
 Suggests:
     dplyr,
     knitr,
     MASS,
     remake,
+    rmarkdown,
     testthat
+VignetteBuilder: knitr
 Remotes:
     richfitz/remake,
     wlandau/parallelRemake
