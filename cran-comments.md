@@ -19,4 +19,4 @@ Suggests or Enhances not in mainstream repositories:
 
 The `remake` and `parallelRemake` dependency messages will disappear when [remake](https://github.com/richfitz/remake) and [parallelRemake](https://github.com/wlandau/parallelRemake) appear on CRAN (which could be a long while yet). At that time, I will remove the `Remotes` field in the DESCRIPTION, and the spelling note will disappear.
 
-Builds passed successfully on [AppVeyor](https://www.appveyor.com/) and [Travis CI](https://travis-ci.org/). The latest build status is displayed with the badges at the top of the [README](https://github.com/wlandau/remakeGenerator/blob/master/README.md).
+Build checks successfully passed on [AppVeyor](https://ci.appveyor.com/project/wlandau/remakeGenerator) and [Travis CI](https://travis-ci.org/wlandau/remakeGenerator). 100% of the code is [unit-tested](https://codecov.io/github/wlandau/remakeGenerator?branch=master) via `testthat`. The latest build status is displayed with the badges at the top of the [README](https://github.com/wlandau/remakeGenerator/blob/master/README.md).
