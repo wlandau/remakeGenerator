@@ -2,6 +2,7 @@
 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/wlandau/remakeGenerator?branch=master&svg=true)](https://ci.appveyor.com/project/wlandau/remakeGenerator)
 [![Travis-CI Build Status](https://travis-ci.org/wlandau/remakeGenerator.svg?branch=master)](https://travis-ci.org/wlandau/remakeGenerator)
+[![codecov.io](https://codecov.io/github/wlandau/remakeGenerator/coverage.svg?branch=master)](https://codecov.io/github/wlandau/remakeGenerator?branch=master)
 
 The `remakeGenerator` package is a helper add-on for [`remake`](https://github.com/richfitz/remake), a [Makefile](https://www.gnu.org/software/make/)-like reproducible build system for R. If you haven't done so already, go learn [`remake`](https://github.com/richfitz/remake)! Once you do that, you will be ready to use `remakeGenerator`. With `remakeGenerator`, your long and cumbersome workflows will be
 
