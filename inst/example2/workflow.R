@@ -5,22 +5,19 @@ library(remakeGenerator)
 datasets = commands(
   normal16 = normal_dataset(n = 16),
   poisson32 = poisson_dataset(n = 32),
-  poisson64 = poisson_dataset(n = 64)
-) %>%
+  poisson64 = poisson_dataset(n = 64)) %>%
 expand(values = c("rep1", "rep2"))
 
 # Same as the analyses() function.
 analyses = commands(
   linear = linear_analysis(..dataset..),
-  quadratic = quadratic_analysis(..dataset..)
-) %>% 
+  quadratic = quadratic_analysis(..dataset..)) %>% 
 evaluate(wildcard = "..dataset..", values = datasets$target)
 
 # Nearly the same as the summaries() function.
 summaries = commands(
   mse = mse_summary(..dataset.., ..analysis..),
-  coef = coefficients_summary(..analysis..)
-) %>% 
+  coef = coefficients_summary(..analysis..)) %>% 
 evaluate(wildcard = "..analysis..", values = analyses$target) %>% 
 evaluate(wildcard = "..dataset..", values = datasets$target, expand = FALSE)
 
