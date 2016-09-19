@@ -6,7 +6,7 @@ The usage of [`remake`](https://github.com/richfitz/remake) and dependent packag
 commands(my_target = my_function(I("character_literal")))
 ```
 
-In addition, [commands cannot be nested](https://github.com/richfitz/remake/issues/86). For example, instead of `commands(my_target = f1(f2(arg)))`, either write
+With the exception of `I()`, [commands cannot be nested function calls](https://github.com/richfitz/remake/issues/86). For example, instead of `commands(my_target = f1(f2(arg)))`, either write
 
 ```r
 commands(my_target = f1(tmp), tmp = f2(arg))
