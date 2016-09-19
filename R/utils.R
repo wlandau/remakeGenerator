@@ -1,6 +1,5 @@
 #' @title Function \code{assert_commands}
 #' @description Check a data frame of remake commands 
-#' @export
 #' @param x data frame of remake commands
 assert_commands = function(x){
   if(is.null(x$target) | any(!nchar(x$target)) | any(!nchar(x$command))) 
@@ -10,8 +9,7 @@ assert_commands = function(x){
 
 #' @title Function \code{clean_stages}
 #' @description Sanitize and check a named list of 
-#' data frames defining the stages of the workflow
-#' @export
+#' data frames defining the stages of the workflow.
 #' @return sanitized list of data frames defining the stages of the workflow
 #' @param stages named list of data frames defining the stages of the workflow
 clean_stages = function(stages){
@@ -26,7 +24,6 @@ clean_stages = function(stages){
 
 #' @title Function \code{factor2character}
 #' @description Turns a factor into a character and leaves other arguments alone.
-#' @export 
 #' @return a non-factor vector
 #' @param x a vector, factor or non-factor
 factor2character = function(x){
@@ -37,7 +34,6 @@ factor2character = function(x){
 #' @title Function \code{fake_targets}
 #' @description Get a \code{YAML}-like list of fake/phony \code{remake} targets
 #' from a named list of data frames defining the stages of the workflow
-#' @export
 #' @return \code{YAML}-like list of fake/phony \code{remake} targets
 #' @param stages named list of data frames defining the stages of the workflow
 fake_targets = function(stages){
@@ -50,7 +46,6 @@ fake_targets = function(stages){
 #' @title Function \code{finalize_targets}
 #' @description Finalize the list of remake targets from 
 #' YAML like lists of fake and real targets.
-#' @export
 #' @return \code{YAML}-like list of all \code{remake} targets
 #' @param fake_targets \code{YAML}-like list of fake/phony \code{remake} targets
 #' @param real_targets \code{YAML}-like list of real 
@@ -66,7 +61,6 @@ finalize_targets = function(fake_targets, real_targets){
 #' @title Function \code{real_targets}
 #' @description Get a \code{YAML}-like list of real (non-fake/non-phony) \code{remake} 
 #' targets from a named list of data frames defining the stages of the workflow
-#' @export
 #' @return \code{YAML}-like list of real (non-fake/non-phony) \code{remake} targets
 #' @param stages named list of data frames defining the stages of the workflow
 real_targets = function(stages){

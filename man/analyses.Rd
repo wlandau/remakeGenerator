@@ -7,14 +7,14 @@
 analyses(commands, datasets)
 }
 \arguments{
-\item{commands}{output of \code{commands(...)}}
+\item{commands}{output of the \code{\link{commands}} function.}
 
 \item{datasets}{Data frame of commands to generate datasets}
 }
 \value{
-preprocessed data frame of analysis commands
+Preprocessed data frame of \code{remake} analysis commands
 }
 \description{
-Helper function for the user. Preprocess a data frame of analysis commands.
+Produces a data frame of \code{remake} analysis commands.
 }
 

@@ -8,19 +8,20 @@ summaries(commands, analyses, datasets, gather = rep("list",
   dim(commands)[1]))
 }
 \arguments{
-\item{commands}{Data frame output of \code{commands(...)}}
+\item{commands}{Data frame output of the \code{\link{commands}} function.}
 
-\item{analyses}{Data frame of commands to generate analyses}
+\item{analyses}{Data frame of \code{remake} commands to generate analyses.}
 
-\item{datasets}{Data frame of commands to generate datasets}
+\item{datasets}{Data frame of \code{remake} commands to generate datasets.}
 
 \item{gather}{Character vector, names of functions to gather the summaries.
-If not \code{NULL}, length must be the number of rows in \code{commands}.}
+If not \code{NULL}, length must be the number of rows in the \code{commands}
+argument.}
 }
 \value{
-preprocessed data frame of analysis commands
+preprocessed data frame of \code{remake} summary commands
 }
 \description{
-Helper function for the user. Preprocess a data frame of summary commands.
+Produces a data frame of \code{remake} summary commands.
 }
 

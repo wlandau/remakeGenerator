@@ -14,6 +14,6 @@ sanitized list of data frames defining the stages of the workflow
 }
 \description{
 Sanitize and check a named list of 
-data frames defining the stages of the workflow
+data frames defining the stages of the workflow.
 }
 

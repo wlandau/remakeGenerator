@@ -15,7 +15,7 @@ expand = function(x, values = NULL){
 }
 
 #' @title Function \code{evaluate}
-#' @description Evaluate the wildcards in the commands of a data frame
+#' @description Evaluates the wildcard placeholders of a data frame of \code{remake} commands.
 #' @export 
 #' @return an evaluated data frame
 #' @param x argument data frame

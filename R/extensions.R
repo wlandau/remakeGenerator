@@ -1,22 +1,23 @@
 #' @title Function \code{analyses}
-#' @description Helper function for the user. Preprocess a data frame of analysis commands.
+#' @description Produces a data frame of \code{remake} analysis commands.
 #' @export 
-#' @return preprocessed data frame of analysis commands
-#' @param commands output of \code{commands(...)}
+#' @return Preprocessed data frame of \code{remake} analysis commands
+#' @param commands output of the \code{\link{commands}} function.
 #' @param datasets Data frame of commands to generate datasets
 analyses = function(commands, datasets){
   evaluate(commands, wildcard = "..dataset..", values = datasets$target)
 }
 
 #' @title Function \code{summaries}
-#' @description Helper function for the user. Preprocess a data frame of summary commands.
+#' @description Produces a data frame of \code{remake} summary commands.
 #' @export 
-#' @return preprocessed data frame of analysis commands
-#' @param commands Data frame output of \code{commands(...)}
-#' @param analyses Data frame of commands to generate analyses
-#' @param datasets Data frame of commands to generate datasets
+#' @return preprocessed data frame of \code{remake} summary commands
+#' @param commands Data frame output of the \code{\link{commands}} function.
+#' @param analyses Data frame of \code{remake} commands to generate analyses.
+#' @param datasets Data frame of \code{remake} commands to generate datasets.
 #' @param gather Character vector, names of functions to gather the summaries.
-#' If not \code{NULL}, length must be the number of rows in \code{commands}.
+#' If not \code{NULL}, length must be the number of rows in the \code{commands}
+#' argument.
 summaries = function(commands, analyses, datasets, gather = rep("list", dim(commands)[1])){
   out = commands
   group = paste(colnames(out), collapse = "_")

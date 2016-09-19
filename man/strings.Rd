@@ -7,12 +7,12 @@
 strings(...)
 }
 \arguments{
-\item{...}{expressions to turn into characters}
+\item{...}{unquoted symbols to turn into character strings.}
 }
 \value{
 a character vector
 }
 \description{
-Turns expressions into character strings
+Turns unquoted symbols into character strings.
 }
 

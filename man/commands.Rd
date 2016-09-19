@@ -13,7 +13,7 @@ commands(...)
 data frame of remake targets and commands
 }
 \description{
-Turn a collection of R expressions into 
-a data frame of remake targets and commands.
+Turns a named collection of \code{remake} commands into 
+a data frame of \code{remake} targets and \code{remake} commands.
 }
 

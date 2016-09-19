@@ -7,13 +7,13 @@
 targets(...)
 }
 \arguments{
-\item{...}{data frames of remake commands}
+\item{...}{Named collection of data frames of \code{remake} commands.}
 }
 \value{
-YAML-like list of targets
+YAML-like list of targets.
 }
 \description{
-Put the data frames of remake commands all together to make a
-YAML-like list of targets
+Puts a named collection of data frames of \code{remake} 
+commands all together to make a YAML-like list of targets.
 }
 

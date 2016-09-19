@@ -22,6 +22,6 @@ is replaced with the next entry in the \code{values} vector, and the values are 
 an evaluated data frame
 }
 \description{
-Evaluate the wildcards in the commands of a data frame
+Evaluates the wildcard placeholders of a data frame of \code{remake} commands.
 }
 

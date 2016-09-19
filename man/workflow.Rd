@@ -10,7 +10,7 @@ workflow(targets = NULL, sources = NULL, packages = NULL,
 }
 \arguments{
 \item{targets}{YAML-like list of targets, which you can generate by supplying
-data frames of remake commands to the \code{targets()} function.}
+data frames of remake commands to the \code{\link{targets}} function.}
 
 \item{sources}{Character vector of R source files}
 
@@ -23,12 +23,13 @@ working directory. Set to \code{NULL} to suppress the writing of the Makefile.}
 
 \item{begin}{Character vector of lines to prepend to the Makefile.}
 
-\item{clean}{Character vector of extra shell commands for \code{make clean}.}
+\item{clean}{Character vector of extra Makefile commands for \code{make clean}.}
 
 \item{remake_args}{Fully-named list of additional arguments to \code{remake::make}.
-You cannot set \code{target_names} or \code{remake_file} this way.}
+You cannot set \code{target_names} or \code{remake_file} this way because those
+names are reserved.}
 }
 \description{
-Write the files for a remake workflow
+Writes the files for a remake workflow.
 }
 
