@@ -323,20 +323,20 @@ You may want to use the [downsize](https://github.com/wlandau/downsize) package 
 
 ```{r, eval = F}
 library(downsize)
-downsize() # same as scale_down()
+scale_down()
 
 normal_dataset = function(n = 16){
-  n = ds(n, 4)
+  n = downsize(n, 4)
   data.frame(x = rnorm(n, 1), y = rnorm(n, 5))
 }
 
 poisson_dataset = function(n = 16){
-  n = ds(n, 4)
+  n = downsize(n, 4)
   data.frame(x = rpois(n, 1), y = rpois(n, 5))
 }
 ```
 
-Above, `downsize()` sets the `downsize` option to `TRUE`, which is a signal to the `ds()` function. The command `ds(A, ...)` says "downsize `A` to a some other object when `getOption("downsize")` is `TRUE`". To switch to the full scaled-up workflow, replace `downsize()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild targets in response to changes to global options, so you will have to run `make clean`, etc. whenever you scale up or down.
+Above, `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `downsize()` function. The command `downsize(A, ...)` says "downsize `A` to a some other object when `getOption("downsize")` is `TRUE`". To switch to the full scaled-up workflow, replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild targets in response to changes to global options, so you will have to run `make clean`, etc. whenever you scale up or down.
 
 
 # Flexibility
