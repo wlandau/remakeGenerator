@@ -9,6 +9,7 @@ LICENSE
 NEWS.md
 README.md
 README.html
+TROUBLESHOOTING.md
 vignettes/remakeGenerator.html
 vignettes/remakeGenerator.log
 ^.*\.Rproj$
