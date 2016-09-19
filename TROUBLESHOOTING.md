@@ -1,6 +1,6 @@
 # Troubleshooting
 
-The use of [`remake`](https://github.com/richfitz/remake) and dependent packages is not always obvious. For example, to pass a character literal to a command, [use the `I()` function](https://github.com/richfitz/remake/issues/58). For example,
+The usage of [`remake`](https://github.com/richfitz/remake) and dependent packages is not always obvious. For example, to pass a character literal to a command, [use the `I()` function](https://github.com/richfitz/remake/issues/58). For example,
 
 ```r
 commands(my_target = my_function(I("character_literal")))
