@@ -15,22 +15,20 @@ The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml
 
 # Installation
 
-Ensure that [R](https://www.r-project.org/) and [GNU Make](https://www.gnu.org/software/make/) are installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). Open an R session and run 
+Ensure that [R](https://www.r-project.org/) is installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). Then, you can install one of the [stable releases](https://github.com/wlandau/remakeGenerator/releases). Download the `.tar.gz` file, open an R session, and run the following.
 
-```
-library(devtools)
-install_github("wlandau/remakeGenerator")
-```
-
-Alternatively, you can build the package from the source and install it by hand. First, ensure that [git](https://git-scm.com/) is installed. Next, open a [command line program](http://linuxcommand.org/) such as [Terminal](https://en.wikipedia.org/wiki/Terminal_%28OS_X%29) and enter the following commands.
-
-```
-git clone git@github.com:wlandau/remakeGenerator.git
-R CMD build remakeGenerator
-R CMD INSTALL ...
+```r
+install.packages("remakeGenerator_0.0.0.tar.gz", repos = NULL, type = "source")
 ```
 
-where `...` is replaced by the name of the tarball produced by `R CMD build`.
+where `"remakeGenerator_0.0.0.tar.gz"` may be replaced by another version. To install the development version, open an R session and run 
+
+```
+> library(devtools)
+> install_github("wlandau/remakeGenerator")
+```
+
+# Rtools for Windows users
 
 Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) to take full advantage of `remakeGenerator`'s features, specifically to run [Makefiles](https://www.gnu.org/software/make/) with `system("make")`.
 

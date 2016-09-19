@@ -18,7 +18,7 @@ The `remakeGenerator` package is a helper add-on for [`remake`](https://github.c
 
 The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml.org/) files for [`remake`](https://github.com/richfitz/remake) that would be too big to type manually.
 
-# Rtools
+# Rtools for Windows users
 
 Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) to take full advantage of `remakeGenerator`'s features, specifically to run [Makefiles](https://www.gnu.org/software/make/) with `system("make")`.
 
