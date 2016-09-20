@@ -18,10 +18,10 @@ The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml
 Ensure that [R](https://www.r-project.org/) is installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). Then, you can install one of the [stable releases](https://github.com/wlandau/remakeGenerator/releases). Download the `.tar.gz` file, open an R session, and run the following.
 
 ```r
-install.packages("remakeGenerator_0.0.0.tar.gz", repos = NULL, type = "source")
+install.packages("remakeGenerator_<VERSION>.tar.gz", repos = NULL, type = "source")
 ```
 
-where `"remakeGenerator_0.0.0.tar.gz"` may be replaced by another version. To install the development version, open an R session and run 
+where `<VERSION>` is the version number. To install the development version, open an R session and run 
 
 ```
 > library(devtools)
