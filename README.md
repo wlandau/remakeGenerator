@@ -15,27 +15,26 @@ The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml
 
 # Installation
 
-Ensure that [R](https://www.r-project.org/) is installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). Then, you can install one of the [stable releases](https://github.com/wlandau/remakeGenerator/releases). Download the `.tar.gz` file, open an R session, and run the following.
+Ensure that [R](https://www.r-project.org/) is installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). Then, you can install one of the [stable releases](https://github.com/wlandau/remakeGenerator/releases). Download `remakeGenerator_<VERSION>.tar.gz` (where `<VERSION>` is the version number), open an R session, and run the following.
 
 ```r
 install.packages("remakeGenerator_<VERSION>.tar.gz", repos = NULL, type = "source")
 ```
 
-where `<VERSION>` is the version number. To install the development version, open an R session and run 
+To install the development version, open an R session and run 
 
 ```
 > library(devtools)
 > install_github("wlandau/remakeGenerator")
-```
+
+# Rtools for Windows users
+
+Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) to take full advantage of `remakeGenerator`'s features, specifically to run [Makefiles](https://www.gnu.org/software/make/) with `system("make")`.
 
 # Troubleshooting
 
 Please refer to [TROUBLESHOOTING.md](https://github.com/wlandau/remakeGenerator/blob/master/TROUBLESHOOTING.md) on the [GitHub page](https://github.com/wlandau/remakeGenerator) for instructions.
 
-
-# Rtools for Windows users
-
-Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) to take full advantage of `remakeGenerator`'s features, specifically to run [Makefiles](https://www.gnu.org/software/make/) with `system("make")`.
 
 # Example 1 Quickstart
 
