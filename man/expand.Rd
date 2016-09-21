@@ -16,6 +16,7 @@ an expanded data frame
 }
 \description{
 Expands a dataframe of remake commands by duplicating rows.
+Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 }
 \details{
 See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd

@@ -1,5 +1,6 @@
 #' @title Function \code{expand}
 #' @description Expands a dataframe of remake commands by duplicating rows.
+#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 #' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
 #' for a package tutorial.
 #' @export 
@@ -18,6 +19,7 @@ expand = function(x, values = NULL){
 
 #' @title Function \code{evaluate}
 #' @description Evaluates the wildcard placeholders of a data frame of \code{remake} commands.
+#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 #' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
 #' for a package tutorial.
 #' @export 
@@ -44,7 +46,8 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand = TRUE){
 }
 
 #' @title Function \code{gather}
-#' @description Aggregate/gather the targets of a previous set of remake commands. 
+#' @description Aggregate/gather the targets of a previous set of remake commands.
+#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 #' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
 #' for a package tutorial.
 #' @export 

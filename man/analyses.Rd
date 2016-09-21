@@ -16,6 +16,7 @@ Preprocessed data frame of \code{remake} analysis commands
 }
 \description{
 Produces a data frame of \code{remake} analysis commands.
+Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 }
 \details{
 See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd

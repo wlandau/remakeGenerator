@@ -11,6 +11,6 @@ example_remakeGenerator(index = 1)
 }
 \description{
 Write files to generate an example workflow.
-Refer to the generated README.md for further instructions.
+Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 }
 

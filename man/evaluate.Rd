@@ -23,6 +23,7 @@ an evaluated data frame
 }
 \description{
 Evaluates the wildcard placeholders of a data frame of \code{remake} commands.
+Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 }
 \details{
 See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd

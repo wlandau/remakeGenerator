@@ -31,6 +31,7 @@ names are reserved.}
 }
 \description{
 Writes the files for a remake workflow.
+Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
 }
 \details{
 See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
