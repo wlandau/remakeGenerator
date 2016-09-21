@@ -24,4 +24,8 @@ preprocessed data frame of \code{remake} summary commands
 \description{
 Produces a data frame of \code{remake} summary commands.
 }
+\details{
+See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
+for a package tutorial.
+}
 

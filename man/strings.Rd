@@ -15,4 +15,8 @@ a character vector
 \description{
 Turns unquoted symbols into character strings.
 }
+\details{
+See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
+for a package tutorial.
+}
 

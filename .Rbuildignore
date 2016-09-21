@@ -10,6 +10,7 @@ NEWS.md
 README.md
 README.html
 TROUBLESHOOTING.md
+TROUBLESHOOTING.html
 vignettes/remakeGenerator.html
 vignettes/remakeGenerator.log
 ^.*\.Rproj$

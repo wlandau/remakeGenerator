@@ -19,4 +19,8 @@ data frame with a command to gather the targets in \code{x}
 \description{
 Aggregate/gather the targets of a previous set of remake commands.
 }
+\details{
+See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
+for a package tutorial.
+}
 

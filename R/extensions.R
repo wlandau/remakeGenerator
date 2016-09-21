@@ -1,5 +1,7 @@
 #' @title Function \code{analyses}
 #' @description Produces a data frame of \code{remake} analysis commands.
+#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
+#' for a package tutorial.
 #' @export 
 #' @return Preprocessed data frame of \code{remake} analysis commands
 #' @param commands output of the \code{\link{commands}} function.
@@ -10,6 +12,8 @@ analyses = function(commands, datasets){
 
 #' @title Function \code{summaries}
 #' @description Produces a data frame of \code{remake} summary commands.
+#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
+#' for a package tutorial.
 #' @export 
 #' @return preprocessed data frame of \code{remake} summary commands
 #' @param commands Data frame output of the \code{\link{commands}} function.

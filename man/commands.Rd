@@ -16,4 +16,8 @@ data frame of remake targets and commands
 Turns a named collection of \code{remake} commands into 
 a data frame of \code{remake} targets and \code{remake} commands.
 }
+\details{
+See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
+for a package tutorial.
+}
 
