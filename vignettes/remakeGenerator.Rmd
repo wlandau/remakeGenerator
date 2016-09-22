@@ -342,7 +342,7 @@ poisson_dataset = function(n = 16){
 }
 ```
 
-Above, `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `downsize()` function. The command `downsize(A, ...)` says "downsize `A` to a some other object when `getOption("downsize")` is `TRUE`". To switch to the full scaled-up workflow, replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild targets in response to changes to global options, so you will have to manually run `make clean` to start from scratch whenever you scale up or down.
+Above, `scale_down()` sets the `downsize` option to `TRUE`, which is a signal to the `downsize()` function. The command `downsize(A, ...)` says "downsize `A` to a some other object when `getOption("downsize")` is `TRUE`". To switch to the full scaled-up workflow, replace `scale_down()` with `scale_up()`. Unfortunately, [`remake`](https://github.com/richfitz/remake) does not rebuild targets in response to changes to global options, so you should manually run `remake::make("clean")` to start from scratch whenever you scale up or down.
 
 
 # Flexibility
