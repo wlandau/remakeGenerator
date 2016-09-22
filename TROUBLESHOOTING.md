@@ -1,4 +1,4 @@
-# Troubleshooting
+Use the `help_remakeGenerator()` function to obtain a collection of helpful links.
 
 The usage of [`remake`](https://github.com/richfitz/remake) and dependent packages is not always obvious. To pass a character literal to a command, [use the `I()` function](https://github.com/richfitz/remake/issues/58).
 

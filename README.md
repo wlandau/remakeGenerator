@@ -31,9 +31,9 @@ To install the development version, open an R session and run
 
 Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install-Rtools-for-Windows) to take full advantage of `remakeGenerator`'s features, specifically to run [Makefiles](https://www.gnu.org/software/make/) with `system("make")`.
 
-# Troubleshooting
+# Help and troubleshooting
 
-Please refer to [TROUBLESHOOTING.md](https://github.com/wlandau/remakeGenerator/blob/master/TROUBLESHOOTING.md) on the [GitHub page](https://github.com/wlandau/remakeGenerator) for instructions.
+Use the `help_remakeGenerator()` function to obtain a collection of helpful links. For troubleshooting, please refer to [TROUBLESHOOTING.md](https://github.com/wlandau/remakeGenerator/blob/master/TROUBLESHOOTING.md) on the [GitHub page](https://github.com/wlandau/remakeGenerator) for instructions.
 
 
 # Example 1 Quickstart
