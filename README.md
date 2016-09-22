@@ -26,6 +26,7 @@ To install the development version, open an R session and run
 ```
 > library(devtools)
 > install_github("wlandau/remakeGenerator")
+```
 
 # Rtools for Windows users
 
