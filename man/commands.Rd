@@ -15,10 +15,12 @@ data frame of remake targets and commands
 \description{
 Turns a named collection of \code{remake} commands into 
 a data frame of \code{remake} targets and \code{remake} commands.
-Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{
-See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-for a package tutorial.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

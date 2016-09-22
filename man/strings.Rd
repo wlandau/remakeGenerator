@@ -14,10 +14,12 @@ a character vector
 }
 \description{
 Turns unquoted symbols into character strings.
-Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{
-See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-for a package tutorial.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

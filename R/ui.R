@@ -1,8 +1,8 @@
 #' @title Function \code{strings}
 #' @description Turns unquoted symbols into character strings.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
-#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-#' for a package tutorial.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export 
 #' @return a character vector
 #' @param ... unquoted symbols to turn into character strings.
@@ -17,9 +17,9 @@ strings = function(...){
 #' @title Function \code{commands}
 #' @description Turns a named collection of \code{remake} commands into 
 #' a data frame of \code{remake} targets and \code{remake} commands.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
-#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-#' for a package tutorial.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export
 #' @return data frame of remake targets and commands
 #' @param ... commands named with their respective targets
@@ -35,9 +35,9 @@ commands = function(...) {
 #' @title Function \code{targets}
 #' @description Puts a named collection of data frames of \code{remake} 
 #' commands all together to make a YAML-like list of targets.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
-#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-#' for a package tutorial.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export 
 #' @return YAML-like list of targets.
 #' @param ... Named collection of data frames of \code{remake} commands.
@@ -50,15 +50,16 @@ targets = function(...){
 
 #' @title Function \code{workflow}
 #' @description Writes the files for a remake workflow.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
-#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-#' for a package tutorial.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export 
 #' @param targets YAML-like list of targets, which you can generate by supplying
 #' data frames of remake commands to the \code{\link{targets}} function.
 #' @param sources Character vector of R source files
 #' @param packages Character vector of packages
-#' @param remakefile Character, name of the \code{remake} file to generate. Should be in the current working directory.
+#' @param remakefile Character, name of the \code{remake} file to generate. 
+#' Should be in the current working directory.
 #' @param makefile Character, name of the Makefile. Should be in the current
 #' working directory. Set to \code{NULL} to suppress the writing of the Makefile.
 #' @param begin Character vector of lines to prepend to the Makefile.

@@ -16,7 +16,8 @@ data frames of remake commands to the \code{\link{targets}} function.}
 
 \item{packages}{Character vector of packages}
 
-\item{remakefile}{Character, name of the \code{remake} file to generate. Should be in the current working directory.}
+\item{remakefile}{Character, name of the \code{remake} file to generate. 
+Should be in the current working directory.}
 
 \item{makefile}{Character, name of the Makefile. Should be in the current
 working directory. Set to \code{NULL} to suppress the writing of the Makefile.}
@@ -31,10 +32,12 @@ names are reserved.}
 }
 \description{
 Writes the files for a remake workflow.
-Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{
-See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-for a package tutorial.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

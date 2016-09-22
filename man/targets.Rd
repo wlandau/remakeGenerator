@@ -15,10 +15,12 @@ YAML-like list of targets.
 \description{
 Puts a named collection of data frames of \code{remake} 
 commands all together to make a YAML-like list of targets.
-Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{
-See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-for a package tutorial.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

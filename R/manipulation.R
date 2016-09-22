@@ -1,8 +1,8 @@
 #' @title Function \code{expand}
 #' @description Expands a dataframe of remake commands by duplicating rows.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
-#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-#' for a package tutorial.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export 
 #' @return an expanded data frame
 #' @param x argument data frame
@@ -19,9 +19,9 @@ expand = function(x, values = NULL){
 
 #' @title Function \code{evaluate}
 #' @description Evaluates the wildcard placeholders of a data frame of \code{remake} commands.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
-#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-#' for a package tutorial.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export 
 #' @return an evaluated data frame
 #' @param x argument data frame
@@ -47,9 +47,9 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand = TRUE){
 
 #' @title Function \code{gather}
 #' @description Aggregate/gather the targets of a previous set of remake commands.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
-#' @details See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-#' for a package tutorial.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export 
 #' @return data frame with a command to gather the targets in \code{x}
 #' @param x argument data frame

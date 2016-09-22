@@ -23,10 +23,12 @@ preprocessed data frame of \code{remake} summary commands
 }
 \description{
 Produces a data frame of \code{remake} summary commands.
-Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{
-See https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd
-for a package tutorial.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

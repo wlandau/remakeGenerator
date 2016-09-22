@@ -1,6 +1,7 @@
 #' @title Function \code{example_remakeGenerator}
 #' @description Write files to generate an example workflow.
-#' Read https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd for more.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
 #' @export
 #' @param index index of example (1, 2, etc.)
 example_remakeGenerator = function(index = 1){
