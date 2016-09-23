@@ -14,6 +14,10 @@ fake_targets(stages)
 }
 \description{
 Get a \code{YAML}-like list of fake/phony \code{remake} targets
-from a named list of data frames defining the stages of the workflow
+from a named list of data frames defining the stages of the workflow.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

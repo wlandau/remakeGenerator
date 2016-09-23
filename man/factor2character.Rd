@@ -14,5 +14,9 @@ a non-factor vector
 }
 \description{
 Turns a factor into a character and leaves other arguments alone.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

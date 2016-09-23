@@ -15,5 +15,9 @@ sanitized list of data frames defining the stages of the workflow
 \description{
 Sanitize and check a named list of 
 data frames defining the stages of the workflow.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

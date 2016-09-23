@@ -10,6 +10,10 @@ assert_commands(x)
 \item{x}{data frame of remake commands}
 }
 \description{
-Check a data frame of remake commands
+Check a data frame of remake commands.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 

@@ -18,5 +18,9 @@ finalize_targets(fake_targets, real_targets)
 \description{
 Finalize the list of remake targets from 
 YAML like lists of fake and real targets.
+Use the \code{\link{help_remakeGenerator}} function to get more help.
+}
+\seealso{
+\code{\link{help_remakeGenerator}}
 }
 
