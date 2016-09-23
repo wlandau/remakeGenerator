@@ -44,4 +44,4 @@ Use the `help_remakeGenerator()` function to obtain a collection of helpful link
 
 # Acknowledgements
 
-This package stands on the shoulders of [Rich FitzJohn](https://richfitz.github.io/)'s [`remake`](https://github.com/richfitz/remake) package, an understanding of which is a prerequisite for this one.
+This package stands on the shoulders of [Rich FitzJohn](https://richfitz.github.io/)'s [`remake`](https://github.com/richfitz/remake) package.
