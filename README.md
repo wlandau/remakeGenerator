@@ -41,3 +41,7 @@ The [online package vignette](https://github.com/wlandau/remakeGenerator/blob/ma
 
 Use the `help_remakeGenerator()` function to obtain a collection of helpful links. For troubleshooting, please refer to [TROUBLESHOOTING.md](https://github.com/wlandau/remakeGenerator/blob/master/TROUBLESHOOTING.md) on the [GitHub page](https://github.com/wlandau/remakeGenerator) for instructions.
 
+
+# Acknowledgements
+
+This package stands on the shoulders of [Rich FitzJohn](https://richfitz.github.io/)'s [`remake`](https://github.com/richfitz/remake) package, an understanding of which is a prerequisite for this one.
