@@ -61,7 +61,7 @@ Alternatively, distribute the work over four parallel processes with
 system("make -j 4")
 ```
 
-Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) and `remake.yml` rely on the functions defined in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R). To see how `remakeGenerator` saves you time, change the body of one of these functions (something more significant than whitespace or comments) and then run `remake::make()` again. Only the targets that depend on that function are recomputed. If you only change whitespace or comments in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R), the next call to `remake::make()` will change nothing, so you can tidy and document your code without triggering unnecessary rebuilds.
+Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) and `remake.yml` rely on the functions defined in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R). To see how `remakeGenerator` saves you time, change the body of one of these functions (something more significant than whitespace or comments) and then run `remake::make()` again. Only the targets that depend on that function and downstream output are recomputed. If you only change whitespace or comments in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/code.R), the next call to `remake::make()` will change nothing, so you can tidy and document your code without triggering unnecessary rebuilds.
 
 
 # A walk through [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R)
