@@ -9,8 +9,8 @@ d1 = commands(
 )
 
 d2 = commands(
-  normal16 = normal_dataset(n = 16),
   out = ls(),
+  normal16 = normal_dataset(n = 16),
   poisson32 = poisson_dataset(n = 32),
   poisson64 = poisson_dataset(n = 64)
 )

@@ -35,12 +35,18 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand = TRUE){
   if(is.null(wildcard) | is.null(values)) return(x)
   matches = grepl(wildcard, x$command)
   if(!length(matches)) return()
+  while((major <- stri_rand_strings(1, 30)) %in% colnames(x)) next
+  while((minor <- stri_rand_strings(1, 30)) %in% colnames(x)) next
+  x[[major]] = x[[minor]] = 1:nrow(x)
   y = x[matches,]
   if(expand) y = expand(y, values)
   values = rep(values, length.out = dim(y)[1])
   y$command = Vectorize(function(value, command) gsub(wildcard, value, command))(values, y$command)
   rownames(x) = rownames(y) = NULL
+  y[[minor]] = 1:nrow(y)
   out = rbind(y, x[!matches,])
+  out = out[order(out[[major]], out[[minor]]),]
+  out[[major]] = out[[minor]] = NULL
   rownames(out) = NULL
   out
 }

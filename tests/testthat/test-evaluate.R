@@ -29,17 +29,17 @@ test_that("Function evaluate() is correct.", {
     evaluate(dat, wildcard = "..dataset..", 
       values = c("data1", "data2"), expand = F), 
     data.frame(
-      target = c("analysis1", "analysis2", "goof"),
-      command = c("analyze1(data1)", "analyze2(data2)", "ls()"),
+      target = c("analysis1", "goof", "analysis2"),
+      command = c("analyze1(data1)", "ls()", "analyze2(data2)"),
       stringsAsFactors = F))
   expect_equal(
     evaluate(dat, wildcard = "..dataset..", 
       values = c("data1", "data2", "data3"), expand = T), 
     data.frame(
       target = c("analysis1_data1", "analysis1_data2", "analysis1_data3", 
-        "analysis2_data1", "analysis2_data2", "analysis2_data3", "goof"),
+        "goof", "analysis2_data1", "analysis2_data2", "analysis2_data3"),
       command = c("analyze1(data1)", "analyze1(data2)", "analyze1(data3)", 
-        "analyze2(data1)", "analyze2(data2)", "analyze2(data3)", "ls()"),
+        "ls()", "analyze2(data1)", "analyze2(data2)", "analyze2(data3)"),
       stringsAsFactors = F))
 
   testrm("evaluate")
