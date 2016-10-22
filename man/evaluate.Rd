@@ -29,6 +29,6 @@ Use the \code{\link{help_remakeGenerator}} function to get more help.
 Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \seealso{
-\code{\link{help_remakeGenerator}}
+\code{\link{help_remakeGenerator}}, \code{\link{evaluations}}
 }
 

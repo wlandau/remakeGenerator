@@ -21,7 +21,7 @@ expand = function(x, values = NULL){
 #' @description Evaluates the wildcard placeholders of a data frame of \code{remake} commands.
 #' Use the \code{\link{help_remakeGenerator}} function to get more help.
 #' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
-#' @seealso \code{\link{help_remakeGenerator}}
+#' @seealso \code{\link{help_remakeGenerator}}, \code{\link{evaluations}}
 #' @export 
 #' @return an evaluated data frame
 #' @param x argument data frame
@@ -43,6 +43,30 @@ evaluate = function(x, wildcard = NULL, values = NULL, expand = TRUE){
   out = rbind(y, x[!matches,])
   rownames(out) = NULL
   out
+}
+
+#' @title Function \code{evaluations}
+#' @description Evaluates multiple wildcards.
+#' @details Evaluates multiple wildcards by running multiple
+#' calls to \code{evaluate}, with one call for every entry in the 
+#' \code{rules} list. In the calls to \code{evaluate}, the names of 
+#' \code{rules} are plugged into \code{wildcard}, and the elements of
+#' \code{rules} are plugged into \code{values}.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}, \code{\link{evaluate}}
+#' @export 
+#' @return an evaluated data frame
+#' @param x argument data frame
+#' @param rules Named list with wildcards as names and vectors of replacements
+#' as values. See the Details section for more. 
+#' @param expand If \code{TRUE}, loop over the values in \code{rules} when evaluating the wildcards,
+#' creating more rows in the output data frame. Otherwise, each occurance of the wildcard
+#' is replaced with the next entry in the \code{values} vector, and the values are recycled.
+evaluations = function(x, rules = NULL, expand = TRUE){
+  if(is.null(rules)) return(x)
+  for(i in 1:length(rules))
+    x = evaluate(x, wildcard = names(rules)[i], values = rules[[i]], expand = expand)
+  x
 }
 
 #' @title Function \code{gather}
