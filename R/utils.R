@@ -92,3 +92,16 @@ real_targets = function(stages){
     x
   })
 }
+
+#' @title Function \code{unique_random_string}
+#' @description Generates a random character string that
+#' is different from each of the values in \code{exclude}.
+#' @seealso \code{\link{help_remakeGenerator}}
+#' @export
+#' @return random character string not in \code{exclude}
+#' @param exclude excluded values for the returned character string
+#' @param n number of characters in the returned character string
+unique_random_string = function(exclude = NULL, n = 30){
+  while((out <- stri_rand_strings(1, n)) %in% exclude) next
+  out
+}
