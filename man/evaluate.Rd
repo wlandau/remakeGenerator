@@ -4,10 +4,13 @@
 \alias{evaluate}
 \title{Function \code{evaluate}}
 \usage{
-evaluate(x, wildcard = NULL, values = NULL, expand = TRUE)
+evaluate(x, rules = NULL, wildcard = NULL, values = NULL, expand = TRUE)
 }
 \arguments{
 \item{x}{argument data frame}
+
+\item{rules}{Named list with wildcards as names and vectors of replacements
+as values. This is a way to evaluate multiple wildcards at once.}
 
 \item{wildcard}{character string to replace with elements of \code{values}.}
 
@@ -26,9 +29,15 @@ Evaluates the wildcard placeholders of a data frame of \code{remake} commands.
 Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{
+If \code{wildcard} and \code{values} are not \code{NULL}, the members of 
+\code{values} will replace \code{wildcard} in the \code{command}
+column of \code{x}. If the \code{rules} list is not \code{NULL}, \code{rules} takes precedence
+over \code{wildcard} and \code{values}. In this case, the names of \code{rules}
+act as wildcards, and each corresponding element of \code{rules} acts as a 
+\code{values} argument in a recursive call to \code{evaluate}.
 Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \seealso{
-\code{\link{help_remakeGenerator}}, \code{\link{evaluations}}
+\code{\link{help_remakeGenerator}}
 }
 
