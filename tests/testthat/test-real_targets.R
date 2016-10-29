@@ -23,7 +23,7 @@ test_that("Function real_targets() is correct.", {
     analysis1 = list(command = "analyze1(..dataset..)"),
     analysis2 = list(command = "analyze2(..dataset..)"))
 
-  expect_error(real_targets(), NULL)
+  expect_error(real_targets())
   expect_error(real_targets(d1))
   expect_error(real_targets(datasets = d1, analyses = d1))
   expect_equal(real_targets(x), ld)

@@ -6,8 +6,8 @@ targets:
     - datasets
     - analyses
     - summaries
-    - mse
-    - coef
+    - mse_stage
+    - coef_stage
     - output
     - plots
     - reports
@@ -59,6 +59,12 @@ targets:
     - coef_quadratic_poisson32_rep2
     - coef_quadratic_poisson64_rep1
     - coef_quadratic_poisson64_rep2
+  mse_stage:
+    depends:
+    - mse
+  coef_stage:
+    depends:
+    - coef
   output:
     depends:
     - coef.csv

@@ -10,6 +10,25 @@ assert_commands = function(x){
   if(anyDuplicated(x$target)) stop("Commands must be given unique target names. No duplicate names allowed.")
 }
 
+#' @title Function \code{check_target_names}
+#' @description Checks that the names of targets are legal.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{help_remakeGenerator}}
+#' @export
+#' @param target_names names of the \code{remake} targets in the workflow
+check_target_names = function(target_names){
+  illegal = c("clean", "target_name")
+  if(any(target_names %in% illegal)){
+    msg = paste(illegal, collapse = ", ")
+    msg = paste0("Prohibited target names include ", msg, ".")
+    stop(msg)
+  }
+  if(anyDuplicated(target_names)) stop("Targets must have unique names. 
+    In addition, targets(x = my_data_drame) is prohibited if \"x\"
+    is an element of my_data_frame$target. The target 
+    name \"all\" is reserved and similarly prohibited.")
+}
+
 #' @title Function \code{clean_stages}
 #' @description Sanitize and check a named list of 
 #' data frames defining the stages of the workflow.
@@ -82,24 +101,6 @@ fake_targets = function(stages){
   out
 }
 
-#' @title Function \code{finalize_targets}
-#' @description Finalize the list of remake targets from 
-#' YAML like lists of fake and real targets.
-#' Use the \code{\link{help_remakeGenerator}} function to get more help.
-#' @seealso \code{\link{help_remakeGenerator}}
-#' @export
-#' @return \code{YAML}-like list of all \code{remake} targets
-#' @param fake_targets \code{YAML}-like list of fake/phony \code{remake} targets
-#' @param real_targets \code{YAML}-like list of real 
-#' (non-fake/non-phony) \code{remake} targets
-finalize_targets = function(fake_targets, real_targets){
-  for(i in intersect(names(real_targets), names(fake_targets)))
-    fake_targets[[i]] = NULL
-  out = c(fake_targets, real_targets)
-  if(anyDuplicated(names(out))) stop("Targets must not have duplicate names.")
-  out
-}
-
 #' @title Function \code{real_targets}
 #' @description Get a \code{YAML}-like list of real (non-fake/non-phony) \code{remake} 
 #' targets from a named list of data frames defining the stages of the workflow.
@@ -112,7 +113,7 @@ real_targets = function(stages){
   out = do.call("c", lapply(stages, function(x) dlply(x, colnames(x), as.list)))
   out = lapply(out, function(x) {attr(x, "vars") = NULL; x})
   names(out) = lapply(out, function(x) x$target)
-  out = lapply(out, function(x){
+  lapply(out, function(x){
     x$target = NULL
     for(field in c("depends")) if(!is.null(x[[field]]))
       x[[field]] = lapply(unlist(strsplit(x[[field]], split = ",")), stri_trim)

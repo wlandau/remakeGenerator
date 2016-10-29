@@ -37,7 +37,8 @@ reports = data.frame(target = strings(markdown.md, latex.tex),
 reports$knitr = TRUE
 
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
-  mse = mse, coef = coef, output = output, plots = plots, reports = reports)
+  mse_stage = mse, coef_stage = coef, # "mse" and "coef" are already names of targets.
+  output = output, plots = plots, reports = reports)
 
 workflow(targets, sources = "code.R", packages = "MASS", 
   begin = c("# Prepend this", "# to the Makefile."))
