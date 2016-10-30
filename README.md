@@ -34,7 +34,7 @@ Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install
 
 # Tutorial
 
-The [online package vignette](https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd) has a complete tutorial. You can see the available examples with `list_examples_remakeGenerator()`, and you can generate an example with `example_remakeGenerator()`.
+The [online package vignette](https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd) has a complete tutorial. Run `list_examples_remakeGenerator()` to see the available examples, and run `example_remakeGenerator()` to output an example to your current working directory.
 
 
 # Help and troubleshooting
