@@ -4,12 +4,16 @@ source("utils.R")
 
 test_that("Function workflow() is correct.", {
   testwd("workflow")
-  example_remakeGenerator(1)
+  example = "basic"
+  example_remakeGenerator(example)
+  setwd(example)
   source("workflow.R")
   expect_equal(readLines("Makefile")[-1], 
-     readLines(file.path("..", "test-workflow", "Makefile"))[-1])
+     readLines(file.path("..", "..", "test-workflow", "Makefile"))[-1])
   expect_equal(readLines("remake.yml"), 
-    readLines(file.path("..", "test-workflow", "remake.yml")))
+    readLines(file.path("..", "..", "test-workflow", "remake.yml")))
+  setwd("..")
+  unlink(example)
   testrm("workflow")
 })
 

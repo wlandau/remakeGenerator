@@ -4,16 +4,17 @@
 \alias{example_remakeGenerator}
 \title{Function \code{example_remakeGenerator}}
 \usage{
-example_remakeGenerator(index = 1)
+example_remakeGenerator(example = list_examples_remakeGenerator())
 }
 \arguments{
-\item{index}{index of example (1, 2, etc.)}
+\item{example}{name of the example. To see all the available example names, 
+run \code{\link{list_examples_remakeGenerator}}.}
 }
 \description{
-Write files to generate an example workflow.
-Use the \code{\link{help_remakeGenerator}} function to get more help.
+Copy a remakeGenerator example to the current working directory.
+To see the names of all the examples, run \code{\link{list_examples_remakeGenerator}}.
 }
 \seealso{
-\code{\link{help_remakeGenerator}}
+\code{\link{list_examples_remakeGenerator}}, \code{\link{workflow}}
 }
 

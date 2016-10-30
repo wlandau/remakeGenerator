@@ -1,18 +1,24 @@
 #' @title Function \code{example_remakeGenerator}
-#' @description Write files to generate an example workflow.
-#' Use the \code{\link{help_remakeGenerator}} function to get more help.
-#' @seealso \code{\link{help_remakeGenerator}}
+#' @description Copy a remakeGenerator example to the current working directory.
+#' To see the names of all the examples, run \code{\link{list_examples_remakeGenerator}}.
+#' @seealso \code{\link{list_examples_remakeGenerator}}, \code{\link{workflow}}
 #' @export
-#' @param index index of example (1, 2, etc.)
-example_remakeGenerator = function(index = 1){
-  stopifnot(index %in% 1:2)
-  example = paste0("example", index)
-  dir = system.file(example, package = "remakeGenerator")
-  for(file in list.files(dir)){
-    path = system.file(example, file, package = "remakeGenerator")
-    if (!file.exists(path)) stop("File ", file, 
-      " is missing from installed package remakeGenerator.", call.=FALSE)
-    contents = readLines(path)
-    write(contents, file)
-  }
+#' @param example name of the example. To see all the available example names, 
+#' run \code{\link{list_examples_remakeGenerator}}.
+example_remakeGenerator = function(example = list_examples_remakeGenerator()){
+  example <- match.arg(example)
+  dir <- system.file(file.path("examples", example), package = "remakeGenerator")
+  if(file.exists(example)) 
+    stop("There is already a file or folder named ", example, ".", sep = "")
+  file.copy(from = dir, to = getwd(), recursive = TRUE)
+  invisible()
+}
+
+#' @title Function \code{list_examples_remakeGenerator}
+#' @description Return the names of all the remakeGenerator examples.
+#' @seealso \code{\link{example_remakeGenerator}}, \code{\link{workflow}}
+#' @export
+#' @return a names of all the remakeGenerator examples.
+list_examples_remakeGenerator = function(){
+  list.dirs(system.file("examples", package = "remakeGenerator"), full.names = FALSE, recursive = FALSE)
 }

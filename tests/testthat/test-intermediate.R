@@ -4,7 +4,9 @@ source("utils.R")
 
 test_that("Intermediate targets run as expected", {
   testwd("intermediate")
-  example_remakeGenerator(1)
+  example = "basic"
+  example_remakeGenerator(example)
+  setwd(example)
   source("workflow.R")
 
   datasets = commands(
@@ -40,5 +42,7 @@ test_that("Intermediate targets run as expected", {
   remake::make("mse_linear_poisson32")
   expect_equal(sort(parallelRemake::recallable()), 
     sort(strings(linear_poisson32, mse_linear_poisson32, poisson32)))
+  setwd("..")
+  unlink(example)
   testrm("intermediate")
 })
