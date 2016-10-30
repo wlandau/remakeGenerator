@@ -28,13 +28,14 @@ Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install
 Use the `help_remakeGenerator()` function to obtain a collection of helpful links. For troubleshooting, please refer to [TROUBLESHOOTING.md](https://github.com/wlandau/remakeGenerator/blob/master/TROUBLESHOOTING.md) on the [GitHub page](https://github.com/wlandau/remakeGenerator) for instructions.
 
 
-# Example 1 Quickstart
+# Basic example
 
 Write the files for [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) using
 
 ```{r, eval = F}
 library(remakeGenerator)
-example_remakeGenerator(index = 1)
+example_remakeGenerator("basic")
+# list_examples_remakeGenerator() # Shows available examples.
 ```
 
 Run [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/example1/workflow.R) to produce the required  [`remake`](https://github.com/richfitz/remake) file `remake.yml`, along with the optional [Makefile](https://www.gnu.org/software/make/). 
@@ -399,5 +400,5 @@ evaluate(df, rules = list(MU = 1:2, SIGMA = c(0.1, 1)), expand = FALSE)
 evaluate(df, rules = list(MU = 1:2, SIGMA = c(0.1, 1, 10)))
 ```
 
-For another demonstration, see [Example 2](https://github.com/wlandau/remakeGenerator/tree/master/inst/example2), which almost the same as [Example 1](https://github.com/wlandau/remakeGenerator/tree/master/inst/example1) except that it uses `expand()` and `evaluate()` explicitly.
+For another demonstration, see the [flexible example](https://github.com/wlandau/remakeGenerator/tree/master/inst/examples/flexible), which almost the same as the [basic example](https://github.com/wlandau/remakeGenerator/tree/master/inst/examples/basic) except that it uses `expand()` and `evaluate()` explicitly.
 
