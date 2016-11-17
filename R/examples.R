@@ -7,7 +7,8 @@
 #' run \code{\link{list_examples_remakeGenerator}}.
 example_remakeGenerator = function(example = list_examples_remakeGenerator()){
   example <- match.arg(example)
-  dir <- system.file(file.path("examples", example), package = "remakeGenerator")
+  dir <- system.file(file.path("examples", example), 
+    package = "remakeGenerator", mustWork = TRUE)
   if(file.exists(example)) 
     stop("There is already a file or folder named ", example, ".", sep = "")
   file.copy(from = dir, to = getwd(), recursive = TRUE)
@@ -20,5 +21,6 @@ example_remakeGenerator = function(example = list_examples_remakeGenerator()){
 #' @export
 #' @return a names of all the remakeGenerator examples.
 list_examples_remakeGenerator = function(){
-  list.dirs(system.file("examples", package = "remakeGenerator"), full.names = FALSE, recursive = FALSE)
+  list.dirs(system.file("examples", package = "remakeGenerator", mustWork = TRUE), 
+    full.names = FALSE, recursive = FALSE)
 }

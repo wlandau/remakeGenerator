@@ -6,12 +6,12 @@ Authors@R: person(family = "Landau", given = "William",
 Description: Generate large workflows that uses remake 
     (Rich FitzJohn, https://richfitz.github.io/) using minimal R code.
 License: GPL (>=3)
+Depends: R (>= 3.0.0)
 Imports:
     parallelRemake,
     plyr,
     stringi,
     yaml
-Depends: R (>= 3.0.0)
 Suggests:
     dplyr,
     knitr,
