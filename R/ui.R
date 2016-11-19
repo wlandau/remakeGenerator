@@ -17,19 +17,50 @@ strings = function(...){
 #' @title Function \code{commands}
 #' @description Turns a named collection of \code{remake} commands into 
 #' a data frame of \code{remake} targets and \code{remake} commands.
+#' \code{\link{commands_string}} and \code{\link{commands_batch}} are similar.
 #' Use the \code{\link{help_remakeGenerator}} function to get more help.
 #' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
-#' @seealso \code{\link{help_remakeGenerator}}
+#' @seealso \code{\link{commands_string}}, \code{\link{commands_batch}}, 
+#' \code{\link{help_remakeGenerator}}
 #' @export
 #' @return data frame of remake targets and commands
 #' @param ... commands named with their respective targets
 commands = function(...) {
-  args = structure(as.list(match.call()[-1]), class = "uneval")
-  if(!length(args)) return()
-  x = data.frame(target = names(args), command = as.character(args), stringsAsFactors = FALSE)
-  rownames(x) = NULL
-  assert_commands(x)
-  x
+  commands_batch(structure(as.list(match.call()[-1]), class = "uneval"))
+}
+
+#' @title Function \code{commands_string}
+#' @description Similar to \code{\link{commands}} except that commands are
+#' parsed as strings rather than symbols. \code{\link{commands_batch}} is
+#' another alternative.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{commands}}, \code{\link{commands_batch}},
+#' \code{\link{help_remakeGenerator}}
+#' @export
+#' @return data frame of remake targets and commands
+#' @param ... commands named with their respective targets
+commands_string = function(...) {
+  commands_batch(list(...))
+}
+
+#' @title Function \code{commands_batch}
+#' @description Similar to \code{\link{commands}} except that commands are
+#' given as a named character vector with targets as names and commands as elements.
+#' \code{\link{commands_string}} is another alternative.
+#' Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
+#' @seealso \code{\link{commands}}, \code{\link{commands_string}},
+#' \code{\link{help_remakeGenerator}}
+#' @export
+#' @return data frame of remake targets and commands
+#' @param x named character vector with targets as names and commands as elements
+commands_batch = function(x = NULL) {
+  if(!length(x)) return(data.frame(target = character(0), command = character(0)))
+  out = data.frame(target = names(x), command = as.character(x), stringsAsFactors = FALSE)
+  rownames(out) = NULL
+  assert_commands(out)
+  out
 }
 
 #' @title Function \code{targets}
