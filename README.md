@@ -15,16 +15,22 @@ The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml
 
 # Installation
 
-Ensure that [R](https://www.r-project.org/) is installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). Then, you can install one of the [stable releases](https://github.com/wlandau/remakeGenerator/releases). Download `remakeGenerator_<VERSION>.tar.gz` (where `<VERSION>` is the version number), open an R session, and run the following.
+First, ensure that [R](https://www.r-project.org/) is installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). To install the [latest CRAN release](https://cran.r-project.org/web/packages/remakeGenerator/), run
 
 ```r
-install.packages("remakeGenerator_<VERSION>.tar.gz", repos = NULL, type = "source")
+install.packages("remakeGenerator")
 ```
 
-To install the development version, get the [devtools](https://cran.r-project.org/web/packages/devtools/) package and then run
+To install the development version, get the [devtools](https://cran.r-project.org/web/packages/devtools/) package and then run 
 
+```r
+devtools::install_github("wlandau/remakeGenerator", build = TRUE)
 ```
-devtools::install_github("wlandau/remakeGenerator")
+
+If you specify a tag, you can install a GitHub release.
+
+```r
+devtools::install_github("wlandau/remakeGenerator@v0.1.0", build = TRUE)
 ```
 
 
@@ -34,7 +40,11 @@ Windows users may need [`Rtools`](https://github.com/stan-dev/rstan/wiki/Install
 
 # Tutorial
 
-The [online package vignette](https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd) has a complete tutorial. Run `list_examples_remakeGenerator()` to see the available examples, and run `example_remakeGenerator()` to output an example to your current working directory.
+The [online package vignette](https://github.com/wlandau/remakeGenerator/blob/master/vignettes/remakeGenerator.Rmd) has a complete tutorial. You can the load the compiled version from an R session.
+
+```r
+vignette("remakeGenerator")
+```
 
 
 # Help and troubleshooting
