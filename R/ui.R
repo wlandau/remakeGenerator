@@ -66,6 +66,7 @@ commands_batch = function(x = NULL) {
 #' @title Function \code{targets}
 #' @description Puts a named collection of data frames of \code{remake} 
 #' commands all together to make a YAML-like list of targets.
+#' Unnamed arguments are permitted for data frames with exactly one row.
 #' Targets \code{"all"}, \code{"clean"}, and \code{"target_name"},  
 #' are already used by \code{remake} and cannot be overwritten by the user.
 #' In addition, all target names must be unique. For instance,

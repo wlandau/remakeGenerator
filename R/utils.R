@@ -38,13 +38,27 @@ check_target_names = function(target_names){
 #' @return sanitized list of data frames defining the stages of the workflow
 #' @param stages named list of data frames defining the stages of the workflow
 clean_stages = function(stages){
-  msg = "In function targets(), the supplied data frames must all have names. For example, write targets(datasets = my_data_frame, analyses = another_data_frame) instead of targets(my_data_frame, another_data_frame)."
   stages = lapply(stages, function(x)
     data.frame(lapply(x, factor2character), stringsAsFactors = FALSE))
   if(!length(stages)) return()
-  if(is.null(names(stages))) stop(msg)
-  if(any(nchar(names(stages)) < 1)) stop(msg)
+  check_stage_names(stages)
   stages
+}
+
+check_stage_names = function(stages) {
+  msg = "In function targets(), the supplied data frames must all have names. (Exception: data frames with one row.) For example, write targets(datasets = my_data_frame, analyses = another_data_frame) instead of targets(my_data_frame, another_data_frame)."
+
+  unnamed = (names2(stages) == "")
+  row_count = vapply(stages[unnamed], nrow, integer(1L))
+  if (any(row_count != 1L)) stop(msg)
+}
+
+get_stage_names = function(stages) {
+  stage_names = names2(stages)
+  unnamed = (stage_names == "")
+  stage_names[unnamed] =
+    vapply(stages[unnamed], "[[", "target", FUN.VALUE =character(1L))
+  stage_names
 }
 
 #' @title Function \code{evaluations}
@@ -95,8 +109,9 @@ factor2character = function(x){
 #' @return \code{YAML}-like list of fake/phony \code{remake} targets
 #' @param stages named list of data frames defining the stages of the workflow
 fake_targets = function(stages){
-  out = list(all = list(depends = as.list(names(stages))))
-  for(stage in names(stages))
+  stage_names = get_stage_names(stages)
+  out = list(all = list(depends = as.list(stage_names)))
+  for(stage in setdiff(names2(stages), ""))
     out[[stage]] = list(depends = as.list(stages[[stage]]$target))
   out
 }
@@ -132,4 +147,12 @@ real_targets = function(stages){
 unique_random_string = function(exclude = NULL, n = 30){
   while((out <- stri_rand_strings(1, n)) %in% exclude) next
   out
+}
+
+names2 = function(x) {
+  ret = names(x)
+  if (is.null(ret)) {
+    ret = rep("", length(x))
+  }
+  ret
 }
