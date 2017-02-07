@@ -23,10 +23,15 @@ check_target_names = function(target_names){
     msg = paste0("Prohibited target names include ", msg, ".")
     stop(msg)
   }
-  if(anyDuplicated(target_names)) stop("Targets must have unique names. 
-    In addition, targets(x = my_data_drame) is prohibited if \"x\"
-    is an element of my_data_frame$target. The target 
-    name \"all\" is reserved and similarly prohibited.")
+  if(anyDuplicated(target_names)) {
+    msg = paste(target_names[duplicated(target_names)], collapse = ", ")
+    stop("Targets must have unique names. Offending targets:
+      ", msg,
+    ". In addition, targets(x = my_data_drame) is prohibited if \"x\"
+    is an element of my_data_frame$target. (You can omit x = for data
+    frames consisting of exactly one row.) The target name \"all\" is
+    reserved and similarly prohibited.")
+  }
 }
 
 #' @title Function \code{clean_stages}
