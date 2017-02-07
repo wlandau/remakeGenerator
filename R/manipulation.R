@@ -31,7 +31,7 @@ evaluate = function(x, rules = NULL, wildcard = NULL, values = NULL, expand = TR
   y = x[matches,]
   if(expand) y = expand(y, values)
   values = rep(values, length.out = dim(y)[1])
-  y$command = Vectorize(function(value, command) gsub(wildcard, value, command))(values, y$command)
+  y$command = Vectorize(function(value, command) gsub(wildcard, value, command, fixed = TRUE))(values, y$command)
   rownames(x) = rownames(y) = NULL
   y[[minor]] = 1:nrow(y)
   out = rbind(y, x[!matches,])
