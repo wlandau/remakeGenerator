@@ -76,37 +76,46 @@
     </div>
 
     
-    <p>Writes the files for a remake workflow.
+    <p>Write and execute a Makefile to run a remake workflow.
 Use the <code><a href='help_remakeGenerator.html'>help_remakeGenerator</a></code> function to get more help.</p>
     
 
-    <pre><span class='fu'>workflow</span>(<span class='kw'>targets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sources</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>remakefile</span> <span class='kw'>=</span> <span class='st'>"remake.yml"</span>, <span class='kw'>makefile</span> <span class='kw'>=</span> <span class='st'>"Makefile"</span>, <span class='kw'>begin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>clean</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remake_args</span> <span class='kw'>=</span> <span class='fu'>list</span>())</pre>
+    <pre><span class='fu'>workflow</span>(<span class='kw'>targets</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>make_these</span> <span class='kw'>=</span> <span class='st'>"all"</span>, <span class='kw'>sources</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>packages</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remakefile</span> <span class='kw'>=</span> <span class='st'>"remake.yml"</span>, <span class='kw'>makefile</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prepend</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>begin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>clean</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>remake_args</span> <span class='kw'>=</span> <span class='fu'>list</span>(<span class='kw'>verbose</span>
+  <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>run</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>command</span> <span class='kw'>=</span> <span class='st'>"make"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>targets</dt>
       <dd>YAML-like list of targets, which you can generate by supplying
 data frames of remake commands to the <code><a href='targets.html'>targets</a></code> function.</dd>
+      <dt>make_these</dt>
+      <dd>names of the remake targets to makle</dd>
       <dt>sources</dt>
-      <dd>Character vector of R source files</dd>
+      <dd>Character vector of R source files or their containing folders.</dd>
       <dt>packages</dt>
       <dd>Character vector of packages</dd>
       <dt>remakefile</dt>
       <dd>Character, name of the <code>remake</code> file to generate. 
 Should be in the current working directory.</dd>
       <dt>makefile</dt>
-      <dd>Character, name of the Makefile. Should be in the current
-working directory. Set to <code>NULL</code> to suppress the writing of the Makefile.</dd>
+      <dd>Deprecated. The name of the Makefile will always be &#39;Makefile&#39;.</dd>
+      <dt>prepend</dt>
+      <dd>Character vector of lines to prepend to the Makefile</dd>
       <dt>begin</dt>
-      <dd>Character vector of lines to prepend to the Makefile.</dd>
+      <dd>Use &quot;prepend&quot; instead.</dd>
       <dt>clean</dt>
-      <dd>Character vector of extra Makefile commands for <code>make clean</code>.</dd>
+      <dd>Deprecated. The Makefile is no longer stand alone, so it does not need &#39;clean&#39;.
+Use <code>remake::make(&quot;clean&quot;)</code>.</dd>
       <dt>remake_args</dt>
       <dd>Fully-named list of additional arguments to <code>remake::make</code>.
 You cannot set <code>target_names</code> or <code>remake_file</code> this way because those
 names are reserved.</dd>
+      <dt>run</dt>
+      <dd>logical, whether to actually run the Makefile or just write it.</dd>
+      <dt>command</dt>
+      <dd>character scalar, command to run to execute the Makefile.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
