@@ -4,34 +4,43 @@
 \alias{workflow}
 \title{Function \code{workflow}}
 \usage{
-workflow(targets = NULL, sources = NULL, packages = NULL,
-  remakefile = "remake.yml", makefile = "Makefile", begin = NULL,
-  clean = NULL, remake_args = list())
+workflow(targets = NULL, make_these = "all", sources = NULL,
+  packages = NULL, remakefile = "remake.yml", makefile = NULL,
+  prepend = NULL, begin = NULL, clean = NULL, remake_args = list(verbose
+  = TRUE), run = TRUE, command = "make")
 }
 \arguments{
 \item{targets}{YAML-like list of targets, which you can generate by supplying
 data frames of remake commands to the \code{\link{targets}} function.}
 
-\item{sources}{Character vector of R source files}
+\item{make_these}{names of the remake targets to makle}
+
+\item{sources}{Character vector of R source files or their containing folders.}
 
 \item{packages}{Character vector of packages}
 
 \item{remakefile}{Character, name of the \code{remake} file to generate. 
 Should be in the current working directory.}
 
-\item{makefile}{Character, name of the Makefile. Should be in the current
-working directory. Set to \code{NULL} to suppress the writing of the Makefile.}
+\item{makefile}{Deprecated. The name of the Makefile will always be 'Makefile'.}
 
-\item{begin}{Character vector of lines to prepend to the Makefile.}
+\item{prepend}{Character vector of lines to prepend to the Makefile}
 
-\item{clean}{Character vector of extra Makefile commands for \code{make clean}.}
+\item{begin}{Use "prepend" instead.}
+
+\item{clean}{Deprecated. The Makefile is no longer stand alone, so it does not need 'clean'.
+Use \code{remake::make("clean")}.}
 
 \item{remake_args}{Fully-named list of additional arguments to \code{remake::make}.
 You cannot set \code{target_names} or \code{remake_file} this way because those
 names are reserved.}
+
+\item{run}{logical, whether to actually run the Makefile or just write it.}
+
+\item{command}{character scalar, command to run to execute the Makefile.}
 }
 \description{
-Writes the files for a remake workflow.
+Write and execute a Makefile to run a remake workflow.
 Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{

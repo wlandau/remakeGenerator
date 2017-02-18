@@ -1,4 +1,4 @@
-# library(testthat); library(remakeGenerator);
+# library(testthat); devtools::load_all();
 context("intermediate")
 source("utils.R")
 
@@ -7,8 +7,7 @@ test_that("Intermediate targets run as expected", {
   example = "basic"
   example_remakeGenerator(example)
   setwd(example)
-  source("workflow.R")
-
+  
   datasets = commands(
     normal16 = normal_dataset(n = 16),
     poisson32 = poisson_dataset(n = 32),
@@ -20,28 +19,14 @@ test_that("Intermediate targets run as expected", {
       quadratic = quadratic_analysis(..dataset..)), 
     datasets = datasets)
 
-  summaries = summaries(
-    commands = commands(
-      mse = mse_summary(..dataset.., ..analysis..),
-      coef = coefficients_summary(..analysis..)), 
-    analyses = analyses, datasets = datasets, gather = strings(c, rbind))
-  
-  dat = datasets$target
-  ana = c(dat, analyses$target)
-  sum = c(ana, summaries$target)
-  out = c(ana, sort(summaries$target)[1:7])
-  plo = c(ana, sort(summaries$target)[8:14])
-  rep = out
-
-  for(x in strings(datasets, analyses, summaries, output, plots, reports)){
-    remake::make(x)
-    expect_equal(sort(parallelRemake::recallable()), sort(get(substr(x, 0, 3))))
-    remake::make("clean", verbose = F)
-  }
-
-  remake::make("mse_linear_poisson32")
-  expect_equal(sort(parallelRemake::recallable()), 
-    sort(strings(linear_poisson32, mse_linear_poisson32, poisson32)))
+  tar = targets(datasets = datasets, analyses = analyses)
+  workflow(targets = tar, make_these = "datasets", remake_args = list(verbose = F), sources = "code.R")
+  r = parallelRemake::recallable()
+  expect_true(all(datasets$target %in% r))
+  expect_false(any(analyses$target %in% r))
+  workflow(targets = tar, make_these = "linear_poisson64", remake_args = list(verbose = F), 
+    sources = "code.R")
+  expect_true("linear_poisson64" %in% parallelRemake::recallable())
   setwd("..")
   unlink(example)
   testrm("intermediate")

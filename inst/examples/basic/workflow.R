@@ -29,9 +29,6 @@ reports$knitr = TRUE
 targets = targets(datasets = datasets, analyses = analyses, summaries = summaries, 
   output = output, plots = plots, reports = reports)
 
-workflow(targets, sources = "code.R", packages = "MASS", 
-  begin = c("# Prepend this", "# to the Makefile."))
-
-###############################################
-### Now, run remake::make() or the Makefile ###
-###############################################
+# Run the workflow
+workflow(targets, sources = "code.R", packages = "MASS", remake_args = list(verbose = F),
+  prepend = c("# Prepend this", "# to the Makefile."), command = "make -j 2")

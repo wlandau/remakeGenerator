@@ -87,31 +87,42 @@ targets = function(...){
 }
 
 #' @title Function \code{workflow}
-#' @description Writes the files for a remake workflow.
+#' @description Write and execute a Makefile to run a remake workflow.
 #' Use the \code{\link{help_remakeGenerator}} function to get more help.
 #' @details Use the \code{\link{help_remakeGenerator}} function to get more help.
 #' @seealso \code{\link{help_remakeGenerator}}
 #' @export 
 #' @param targets YAML-like list of targets, which you can generate by supplying
 #' data frames of remake commands to the \code{\link{targets}} function.
-#' @param sources Character vector of R source files
+#' @param make_these names of the remake targets to makle
+#' @param sources Character vector of R source files or their containing folders.
 #' @param packages Character vector of packages
 #' @param remakefile Character, name of the \code{remake} file to generate. 
 #' Should be in the current working directory.
-#' @param makefile Character, name of the Makefile. Should be in the current
-#' working directory. Set to \code{NULL} to suppress the writing of the Makefile.
-#' @param begin Character vector of lines to prepend to the Makefile.
-#' @param clean Character vector of extra Makefile commands for \code{make clean}.
+#' @param makefile Deprecated. The name of the Makefile will always be 'Makefile'.
+#' @param prepend Character vector of lines to prepend to the Makefile
+#' @param begin Use "prepend" instead.
+#' @param clean Deprecated. The Makefile is no longer stand alone, so it does not need 'clean'.
+#' Use \code{remake::make("clean")}.
 #' @param remake_args Fully-named list of additional arguments to \code{remake::make}.
 #' You cannot set \code{target_names} or \code{remake_file} this way because those
 #' names are reserved.
-workflow = function(targets = NULL, sources = NULL, packages = NULL,
-  remakefile = "remake.yml", makefile = "Makefile", 
-  begin = NULL, clean = NULL, remake_args = list()){
+#' @param run logical, whether to actually run the Makefile or just write it.
+#' @param command character scalar, command to run to execute the Makefile.
+workflow = function(targets = NULL, make_these = "all", sources = NULL, packages = NULL,
+  remakefile = "remake.yml", makefile = NULL, prepend = NULL,
+  begin = NULL, clean = NULL, remake_args = list(verbose = TRUE), run = TRUE,
+  command = "make"){
+  if(!is.null(begin)){
+    warning("'begin' is deprecated. Use 'prepend' instead.")
+    if(!length(prepend)) prepend = begin
+  }
+  if(!is.null(makefile)) warning("The 'makefile' argument is deprecated. The Makefile is always called 'Makefile' now.")
+  if(!is.null(clean)) warning("The 'clean' argument is deprecated. Use remake::make('clean').")
   yaml = list(packages = packages, sources = sources, targets = targets)
   write(as.yaml(yaml), remakefile)
   yaml_yesno_truefalse(remakefile)
-  if(!is.null(makefile)) 
-    write_makefile(makefile = makefile, remakefiles = remakefile, begin = begin, 
-      clean = clean, remake_args = remake_args)
+  makefile(targets = make_these, remakefiles = remakefile, 
+           prepend = prepend, remake_args = remake_args, run = run,
+           command = command)
 }

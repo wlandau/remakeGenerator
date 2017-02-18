@@ -40,9 +40,6 @@ targets = targets(datasets = datasets, analyses = analyses, summaries = summarie
   mse_stage = mse, coef_stage = coef, # "mse" and "coef" are already names of targets.
   output = output, plots = plots, reports = reports)
 
-workflow(targets, sources = "code.R", packages = "MASS", 
-  begin = c("# Prepend this", "# to the Makefile."))
-
-###############################################
-### Now, run remake::make() or the Makefile ###
-###############################################
+# Run the workflow
+workflow(targets, sources = "code.R", packages = "MASS", remake_args = list(verbose = F),
+  prepend = c("# Prepend this", "# to the Makefile."), command = "make -j 2")
