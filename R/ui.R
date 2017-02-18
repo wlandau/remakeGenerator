@@ -122,6 +122,7 @@ workflow = function(targets = NULL, make_these = "all", sources = NULL, packages
   yaml = list(packages = packages, sources = sources, targets = targets)
   write(as.yaml(yaml), remakefile)
   yaml_yesno_truefalse(remakefile)
+  packages = unique(c("methods", packages))
   makefile(targets = make_these, remakefiles = remakefile, 
            prepend = prepend, remake_args = remake_args, run = run,
            command = command)
