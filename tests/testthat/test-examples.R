@@ -1,4 +1,4 @@
-# library(testthat); library(remakeGenerator);
+# library(testthat); devtools::load_all();
 context("examples")
 source("utils.R")
 
