@@ -23,9 +23,9 @@ test_that("Basic checks on functions for examples are met.", {
   expect_error(example_remakeGenerator("asldjflkdsjfkahjsdljfkhaslkdjflkjasdlfkjasldkf"))
 })
 
-test_that("Basic and flexible examples run as expected", {
+test_that("Example(s) run as expected", {
   testwd("basic-flexible")
-  for(i in c("basic", "flexible")){
+  for(i in c("basic")){ # for(i in c("basic", "flexible")){
     example_remakeGenerator(i)
     setwd(i)
     expect_true(assert_files(1))
