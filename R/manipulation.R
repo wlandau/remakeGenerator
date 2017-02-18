@@ -23,7 +23,7 @@
 evaluate = function(x, rules = NULL, wildcard = NULL, values = NULL, expand = TRUE){
   if(!is.null(rules)) return(evaluations(x = x, rules = rules, expand = expand))
   if(is.null(wildcard) | is.null(values)) return(x)
-  matches = grepl(wildcard, x$command)
+  matches = grepl(wildcard, x$command, fixed = TRUE)
   if(!any(matches)) return(x)
   major = unique_random_string(colnames(x))
   minor = unique_random_string(c(colnames(x), major))
