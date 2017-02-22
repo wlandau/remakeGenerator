@@ -109,10 +109,21 @@ targets = function(...){
 #' names are reserved.
 #' @param run logical, whether to actually run the Makefile or just write it.
 #' @param command character scalar, command to run to execute the Makefile.
+#' \code{command} and \code{args} will be used to call 
+#' \code{system2(command = command, args = args)} to run the \code{Makefile}.
+#' For example, to execute the \code{Makefile} using 4 parallel jobs
+#' while suppressing output to the console, use 
+#' \code{makefile(..., command = "make", args = c("--jobs=4", "-s"))}.
+#' @param args character vector of arguments to the specified \code{command}.
+#' \code{command} and \code{args} will be used to call
+#' \code{system2(command = command, args = args)} to run the \code{Makefile}.
+#' For example, to execute the \code{Makefile} using 4 parallel jobs
+#' while suppressing output to the console, use
+#' \code{makefile(..., command = "make", args = c("--jobs=4", "-s"))}.
 workflow = function(targets = NULL, make_these = "all", sources = NULL, packages = NULL,
   remakefile = "remake.yml", makefile = NULL, prepend = NULL,
   begin = NULL, clean = NULL, remake_args = list(verbose = TRUE), run = TRUE,
-  command = "make"){
+  command = "make", args = character(0)){
   if(!is.null(begin)){
     warning("'begin' is deprecated. Use 'prepend' instead.")
     if(!length(prepend)) prepend = begin
@@ -125,5 +136,5 @@ workflow = function(targets = NULL, make_these = "all", sources = NULL, packages
   packages = unique(c("methods", packages))
   makefile(targets = make_these, remakefiles = remakefile, 
            prepend = prepend, remake_args = remake_args, run = run,
-           command = command)
+           command = command, args = args)
 }

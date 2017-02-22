@@ -35,7 +35,7 @@
       <h1>remakeGenerator</h1>
                         <h4 class="author">William Michael Landau</h4>
             
-            <h4 class="date">2017-02-18</h4>
+            <h4 class="date">2017-02-22</h4>
           </div>
 
     
@@ -66,7 +66,7 @@
 <p>To use <a href="https://github.com/richfitz/remake"><code>remake</code></a> directly in a single process, use</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">worflow</span>(..., <span class="dt">run =</span> <span class="ot">FALSE</span>)
 remake::<span class="kw">make</span>()</code></pre></div>
-<p><strong>Do not call the <a href="https://www.gnu.org/software/make/">Makefile</a> directly in the Linux command line.</strong> As explained in the <a href="https://github.com/wlandau/parallelRemake">parallelRemake</a> vignette, you must use <code><a href="../reference/workflow.html">workflow(..., command = "make -j 2")</a></code> or <code>parallelRemake::makefile(..., command = "make -j 4")</code>, etc. <a href="https://github.com/wlandau/parallelRemake">parallelRemake</a> uses a quick overhead step to configure hidden files for the <a href="https://www.gnu.org/software/make/">Makefile</a> before running it.</p>
+<p><strong>Do not call the <a href="https://www.gnu.org/software/make/">Makefile</a> directly in the Linux command line.</strong> As explained in the <a href="https://github.com/wlandau/parallelRemake">parallelRemake</a> vignette, you must use <code><a href="../reference/workflow.html">workflow(..., command = "make", args = "--jobs=2")</a></code> or <code>parallelRemake::makefile(..., command = "make", args = "--jobs=4")</code>, etc. <a href="https://github.com/wlandau/parallelRemake">parallelRemake</a> uses a quick overhead step to configure hidden files for the <a href="https://www.gnu.org/software/make/">Makefile</a> before running it.</p>
 <p>Notice how <a href="https://github.com/wlandau/remakeGenerator/blob/master/inst/examples/basic/workflow.R"><code>workflow.R</code></a> and <code>remake.yml</code> rely on the functions defined in <a href="https://github.com/wlandau/remakeGenerator/blob/master/inst/examples/basic/code.R"><code>code.R</code></a>. To see how <code>remakeGenerator</code> saves you time, change the body of one of these functions (something more significant than whitespace or comments) and then run <code>remake::make()</code> again. Only the targets that depend on that function and downstream output are recomputed. If you only change whitespace or comments in <a href="https://github.com/wlandau/remakeGenerator/blob/master/inst/examples/basic/code.R"><code>code.R</code></a>, the next call to <code>remake::make()</code> will change nothing, so you can tidy and document your code without triggering unnecessary rebuilds.</p>
 </div>
 <div id="a-walk-through-workflow-r" class="section level1">
@@ -105,18 +105,19 @@ reports$knitr =<span class="st"> </span><span class="ot">TRUE</span></code></pre
   <span class="dt">summaries =</span> summaries, <span class="dt">output =</span> output, <span class="dt">plots =</span> plots, <span class="dt">reports =</span> reports)</code></pre></div>
 <p>Finally, it generates the <a href="https://github.com/richfitz/remake"><code>remake.yml</code></a> file and an overarching <a href="https://www.gnu.org/software/make/">Makefile</a>. Then, unless <code>run = FALSE</code>, it runs the <a href="https://www.gnu.org/software/make/">Makefile</a> to deploy your workflow. In this case, from the <code>command</code> argument, you can see that the work is distributed over at most 2 parallel jobs.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/workflow.html">workflow</a></span>(targets, <span class="dt">sources =</span> <span class="st">"code.R"</span>, <span class="dt">packages =</span> <span class="st">"MASS"</span>, <span class="dt">remake_args =</span> <span class="kw">list</span>(<span class="dt">verbose =</span> F),
-  <span class="dt">prepend =</span> <span class="kw">c</span>(<span class="st">"# Prepend this"</span>, <span class="st">"# to the Makefile."</span>), <span class="dt">command =</span> <span class="st">"make -j 2"</span>)</code></pre></div>
+  <span class="dt">prepend =</span> <span class="kw">c</span>(<span class="st">"# Prepend this"</span>, <span class="st">"# to the Makefile."</span>), <span class="dt">command =</span> <span class="st">"make"</span>,
+  <span class="dt">args =</span> <span class="st">"--jobs=2"</span>)</code></pre></div>
 </div>
 <div id="running-intermediate-stages" class="section level1">
 <h1 class="hasAnchor"><html><body><a href="#running-intermediate-stages" class="anchor"> </a></body></html>Running intermediate stages</h1>
 <p>You can run each intermediate stages by themselves with the <code>make_these</code> argument in <code><a href="../reference/workflow.html">workflow(...)</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/workflow.html">workflow</a></span>(targets, <span class="dt">make_these =</span> <span class="st">"summaries"</span>, 
   <span class="dt">sources =</span> <span class="st">"code.R"</span>, <span class="dt">packages =</span> <span class="st">"MASS"</span>, <span class="dt">remake_args =</span> <span class="kw">list</span>(<span class="dt">verbose =</span> F),
-  <span class="dt">prepend =</span> <span class="kw">c</span>(<span class="st">"# Prepend this"</span>, <span class="st">"# to the Makefile."</span>), <span class="dt">command =</span> <span class="st">"make -j 2"</span>)</code></pre></div>
+  <span class="dt">prepend =</span> <span class="kw">c</span>(<span class="st">"# Prepend this"</span>, <span class="st">"# to the Makefile."</span>), <span class="dt">command =</span> <span class="st">"make"</span>, <span class="dt">args =</span> <span class="st">"--jobs=2"</span>)</code></pre></div>
 <p>Bypassing the <a href="https://www.gnu.org/software/make/">Makefile</a> using <code>run = FALSE</code> and running <a href="https://github.com/richfitz/remake">remake.yml</a> directly does the same thing in a single R process.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/workflow.html">workflow</a></span>(targets, <span class="dt">make_these =</span> <span class="st">"summaries"</span>, <span class="dt">run =</span> <span class="ot">FALSE</span>
   <span class="dt">sources =</span> <span class="st">"code.R"</span>, <span class="dt">packages =</span> <span class="st">"MASS"</span>, <span class="dt">remake_args =</span> <span class="kw">list</span>(<span class="dt">verbose =</span> F),
-  <span class="dt">prepend =</span> <span class="kw">c</span>(<span class="st">"# Prepend this"</span>, <span class="st">"# to the Makefile."</span>), <span class="dt">command =</span> <span class="st">"make -j 2"</span>)
+  <span class="dt">prepend =</span> <span class="kw">c</span>(<span class="st">"# Prepend this"</span>, <span class="st">"# to the Makefile."</span>), <span class="dt">command =</span> <span class="st">"make"</span>, <span class="dt">args =</span> <span class="st">"--jobs=2"</span>)
 remake::<span class="kw">make</span>(<span class="st">"summaries"</span>)</code></pre></div>
 <p>To remove the intermediate files and final results, run</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remake::<span class="kw">make</span>(<span class="st">"clean"</span>)</code></pre></div>
@@ -249,15 +250,16 @@ List of <span class="dv">2</span>
 </div>
 <div id="high-performance-computing" class="section level1">
 <h1 class="hasAnchor"><html><body><a href="#high-performance-computing" class="anchor"> </a></body></html>High-performance computing</h1>
-<p>If you want to run <code>make -j</code> to distribute tasks over multiple nodes of a <a href="http://slurm.schedmd.com/">Slurm</a> cluster, you should generate a Makefile like the one in <a href="http://plindenbaum.blogspot.com/2014/09/parallelizing-gnu-make-4-in-slurm.html">this post</a>. To do this, add the following to an R script (say, <code>my_script.R</code>)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/workflow.html">workflow</a></span>(..., 
+<p>If you want to run Make to distribute tasks over multiple nodes of a <a href="http://slurm.schedmd.com/">Slurm</a> cluster, you should generate a Makefile like the one in <a href="http://plindenbaum.blogspot.com/2014/09/parallelizing-gnu-make-4-in-slurm.html">this post</a>. To do this, add the following to an R script (say, <code>my_script.R</code>)</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/workflow.html">workflow</a></span>(..., <span class="dt">command =</span> <span class="st">"make"</span>, <span class="dt">args =</span> <span class="st">"--jobs=8"</span>,
   <span class="dt">prepend =</span> <span class="kw">c</span>(
     <span class="st">"SHELL=srun"</span>,
     <span class="st">".SHELLFLAGS= &lt;ARGS&gt; bash -c"</span>))</code></pre></div>
 <p>where <code>&lt;ARGS&gt;</code> stands for additional arguments to <code>srun</code>. Then, deploy your parallelized workflow to the cluster using the following <a href="http://linuxcommand.org/">Linux command</a>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">nohup nice -<span class="dv">19</span> R CMD BATCH my_script.R &amp;</code></pre></div>
 <p>For other task managers such as <a href="https://en.wikipedia.org/wiki/Portable_Batch_System">PBS</a>, you may have to create a custom stand-in for a shell. For example, suppose we are using the Univa Grid Engine. From R, call</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/workflow.html">workflow</a></span>(.., <span class="dt">begin =</span> <span class="st">"SHELL = ./shell.sh"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/workflow.html">workflow</a></span>(.., <span class="dt">command =</span> <span class="st">"make"</span>, <span class="dt">args =</span> <span class="st">"--jobs=8"</span>,
+  <span class="dt">begin =</span> <span class="st">"SHELL = ./shell.sh"</span>)</code></pre></div>
 <p>where the file <code>shell.sh</code> contains</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#!/bin/bash</span>
 shift

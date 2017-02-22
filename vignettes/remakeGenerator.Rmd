@@ -55,7 +55,7 @@ worflow(..., run = FALSE)
 remake::make()
 ```
 
-**Do not call the [Makefile](https://www.gnu.org/software/make/) directly in the Linux command line.** As explained in the [parallelRemake](https://github.com/wlandau/parallelRemake) vignette, you must use `workflow(..., command = "make -j 2")` or `parallelRemake::makefile(..., command = "make -j 4")`, etc. [parallelRemake](https://github.com/wlandau/parallelRemake) uses a quick overhead step to configure hidden files for the [Makefile](https://www.gnu.org/software/make/) before running it.
+**Do not call the [Makefile](https://www.gnu.org/software/make/) directly in the Linux command line.** As explained in the [parallelRemake](https://github.com/wlandau/parallelRemake) vignette, you must use `workflow(..., command = "make", args = "--jobs=2")` or `parallelRemake::makefile(..., command = "make", args = "--jobs=4")`, etc. [parallelRemake](https://github.com/wlandau/parallelRemake) uses a quick overhead step to configure hidden files for the [Makefile](https://www.gnu.org/software/make/) before running it.
 
 
 Notice how [`workflow.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/examples/basic/workflow.R) and `remake.yml` rely on the functions defined in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/examples/basic/code.R). To see how `remakeGenerator` saves you time, change the body of one of these functions (something more significant than whitespace or comments) and then run `remake::make()` again. Only the targets that depend on that function and downstream output are recomputed. If you only change whitespace or comments in [`code.R`](https://github.com/wlandau/remakeGenerator/blob/master/inst/examples/basic/code.R), the next call to `remake::make()` will change nothing, so you can tidy and document your code without triggering unnecessary rebuilds.
@@ -129,7 +129,8 @@ Finally, it generates the [`remake.yml`](https://github.com/richfitz/remake) fil
 
 ```{r, eval = F}
 workflow(targets, sources = "code.R", packages = "MASS", remake_args = list(verbose = F),
-  prepend = c("# Prepend this", "# to the Makefile."), command = "make -j 2")
+  prepend = c("# Prepend this", "# to the Makefile."), command = "make",
+  args = "--jobs=2")
 ```
 
 # Running intermediate stages
@@ -139,7 +140,7 @@ You can run each intermediate stages by themselves with the `make_these` argumen
 ```{r, eval = F}
 workflow(targets, make_these = "summaries", 
   sources = "code.R", packages = "MASS", remake_args = list(verbose = F),
-  prepend = c("# Prepend this", "# to the Makefile."), command = "make -j 2")
+  prepend = c("# Prepend this", "# to the Makefile."), command = "make", args = "--jobs=2")
 ```
 
 Bypassing the [Makefile](https://www.gnu.org/software/make/) using `run = FALSE` and running [remake.yml](https://github.com/richfitz/remake) directly does the same thing in a single R process.
@@ -147,7 +148,7 @@ Bypassing the [Makefile](https://www.gnu.org/software/make/) using `run = FALSE`
 ```{r, eval = F}
 workflow(targets, make_these = "summaries", run = FALSE
   sources = "code.R", packages = "MASS", remake_args = list(verbose = F),
-  prepend = c("# Prepend this", "# to the Makefile."), command = "make -j 2")
+  prepend = c("# Prepend this", "# to the Makefile."), command = "make", args = "--jobs=2")
 remake::make("summaries")
 ```
 
@@ -317,11 +318,11 @@ The functions `create_bindings()` and `make_environment()` are alternatives from
 
 # High-performance computing
 
-If you want to run `make -j` to distribute tasks over multiple nodes of a [Slurm](http://slurm.schedmd.com/) cluster, you should generate a Makefile like the one in [this post](http://plindenbaum.blogspot.com/2014/09/parallelizing-gnu-make-4-in-slurm.html).
+If you want to run Make to distribute tasks over multiple nodes of a [Slurm](http://slurm.schedmd.com/) cluster, you should generate a Makefile like the one in [this post](http://plindenbaum.blogspot.com/2014/09/parallelizing-gnu-make-4-in-slurm.html).
 To do this, add the following to an R script (say, `my_script.R`)
 
 ```{r, eval = F}
-workflow(..., 
+workflow(..., command = "make", args = "--jobs=8",
   prepend = c(
     "SHELL=srun",
     ".SHELLFLAGS= <ARGS> bash -c"))
@@ -337,7 +338,8 @@ For other task managers such as [PBS](https://en.wikipedia.org/wiki/Portable_Bat
 For example, suppose we are using the Univa Grid Engine. From R, call
 
 ```r
-workflow(.., begin = "SHELL = ./shell.sh")
+workflow(.., command = "make", args = "--jobs=8",
+  begin = "SHELL = ./shell.sh")
 ```
 
 where the file `shell.sh` contains

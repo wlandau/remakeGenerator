@@ -31,4 +31,4 @@ targets = targets(datasets = datasets, analyses = analyses, summaries = summarie
 
 # Run the workflow
 workflow(targets, sources = "code.R", packages = "MASS", remake_args = list(verbose = F),
-  prepend = c("# Prepend this", "# to the Makefile."), command = "make -j 2")
+  prepend = c("# Prepend this", "# to the Makefile."), command = "make", args = "--jobs=2")
