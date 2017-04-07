@@ -14,6 +14,10 @@ The `remakeGenerator` package is a helper add-on for [`remake`](https://github.c
 
 The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml.org/) files for [`remake`](https://github.com/richfitz/remake) that would be too big to type manually.
 
+# Drake
+
+[Drake](https://github.com/wlandau-lilly/drake) is a standalone version of remakeGenerator and borrows many of the ideas of [remake](https://github.com/richfitz/remake). 
+
 # Installation
 
 First, ensure that [R](https://www.r-project.org/) is installed, as well as the dependencies in the [`DESCRIPTION`](https://github.com/wlandau/remakeGenerator/blob/master/DESCRIPTION). To install the [latest CRAN release](https://cran.r-project.org/web/packages/remakeGenerator/), run
