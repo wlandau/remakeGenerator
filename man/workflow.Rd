@@ -42,7 +42,9 @@ names are reserved.}
 \code{system2(command = command, args = args)} to run the \code{Makefile}.
 For example, to execute the \code{Makefile} using 4 parallel jobs
 while suppressing output to the console, use 
-\code{makefile(..., command = "make", args = c("--jobs=4", "-s"))}.}
+\code{makefile(..., command = "make", args = c("--jobs=4", "-s"))}.
+Passing \code{command = NULL} or \code{command = character(0)} 
+will generate the yaml file and not run a command.}
 
 \item{args}{character vector of arguments to the specified \code{command}.
 \code{command} and \code{args} will be used to call
@@ -53,7 +55,7 @@ while suppressing output to the console, use
 }
 \description{
 Write and execute a Makefile to run a remake workflow.
-Use the \code{\link{help_remakeGenerator}} function to get more help.
+  Use the \code{\link{help_remakeGenerator}} function to get more help.
 }
 \details{
 Use the \code{\link{help_remakeGenerator}} function to get more help.

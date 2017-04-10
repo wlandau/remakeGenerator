@@ -10,6 +10,7 @@ testrm = function(x){
   if(!file.exists(file.path("..", dir))) return()
   setwd("..")
   unlink(dir, recursive = T)
+  unlink("remake.yml")
 }
 
 #' @title Function \code{example_datasets}

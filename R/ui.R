@@ -114,8 +114,8 @@ targets = function(...){
 #'   For example, to execute the \code{Makefile} using 4 parallel jobs
 #'   while suppressing output to the console, use 
 #'   \code{makefile(..., command = "make", args = c("--jobs=4", "-s"))}.
-#'   Passing \code{command = NULL} will generate the yaml file and not run a
-#'   command.
+#'   Passing \code{command = NULL} or \code{command = character(0)} 
+#'   will generate the yaml file and not run a command. 
 #' @param args character vector of arguments to the specified \code{command}.
 #'   \code{command} and \code{args} will be used to call
 #'   \code{system2(command = command, args = args)} to run the \code{Makefile}.
@@ -136,7 +136,7 @@ workflow = function(targets = NULL, make_these = "all", sources = NULL, packages
   write(as.yaml(yaml), remakefile)
   yaml_yesno_truefalse(remakefile)
   packages = unique(c("methods", packages))
-  if(!is.null(command)){
+  if(length(command)){
     makefile(targets = make_these, remakefiles = remakefile, 
            prepend = prepend, remake_args = remake_args, run = run,
            command = command, args = args)
