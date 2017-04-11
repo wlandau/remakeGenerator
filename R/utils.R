@@ -8,6 +8,7 @@ assert_commands = function(x){
   if(is.null(x$target) | any(!nchar(x$target)) | any(!nchar(x$command))) 
     stop("All commands and their targets must be given. For example, write commands(x = data(y), z = 3) instead of commands(x, z) or commands(data(y), 3).")
   if(anyDuplicated(x$target)) stop("Commands must be given unique target names. No duplicate names allowed.")
+  invisible(x)
 }
 
 #' @title Function \code{check_target_names}
