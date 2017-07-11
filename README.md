@@ -16,7 +16,7 @@ The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml
 
 # Drake
 
-[Drake](https://github.com/wlandau-lilly/drake) is a standalone version of remakeGenerator and borrows many of the ideas of [remake](https://github.com/richfitz/remake). 
+[Drake](https://github.com/wlandau-lilly/drake) is a newer, standalone, [CRAN-published](https://CRAN.R-project.org/package=drake) build system. It has the convenience of remakeGenerator, the reproducibility of remake, and several built-in forms of parallel computing, even ones not available in parallelRemake.
 
 # Installation
 
