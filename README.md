@@ -1,3 +1,7 @@
+# Drake, the successor to remakeGenerator
+
+[Drake](https://github.com/wlandau-lilly/drake) is a newer, standalone, [CRAN-published](https://CRAN.R-project.org/package=drake) [Make](https://www.gnu.org/software/make/)-like build system. It has the convenience of [remakeGenerator](https://github.com/wlandau/remakeGenerator), the reproducibility of [remake](https://github.com/richfitz/remake), and more comprehensive built-in parallel computing functionality than [parallelRemake](https://github.com/wlandau/parallelRemake).
+
 # remakeGenerator
 
 [![Travis-CI Build Status](https://travis-ci.org/wlandau/remakeGenerator.svg?branch=master)](https://travis-ci.org/wlandau/remakeGenerator)
@@ -13,10 +17,6 @@ The `remakeGenerator` package is a helper add-on for [`remake`](https://github.c
 - **Parallelizable**. Distribute your workflow over multiple parallel processes with a single flag in [GNU Make](https://www.gnu.org/software/make/).
 
 The `remakeGenerator` package accomplishes this by generating [YAML](http://yaml.org/) files for [`remake`](https://github.com/richfitz/remake) that would be too big to type manually.
-
-# Drake
-
-[Drake](https://github.com/wlandau-lilly/drake) is a newer, standalone, [CRAN-published](https://CRAN.R-project.org/package=drake) build system. It has the convenience of remakeGenerator, the reproducibility of remake, and several built-in forms of parallel computing, even ones not available in parallelRemake.
 
 # Installation
 
